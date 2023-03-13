@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.ahn.vehiclerentapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                 }
                 else {
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
                     finish();
                     overridePendingTransition(0, 0);

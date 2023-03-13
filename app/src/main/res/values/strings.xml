@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">VehicleRentApp</string>
+    <string name="login_txt">Login</string>
+    <string name="password_txt">Password</string>
+    <string name="login_btn_txt">Login</string>
+    <string name="don_t_have_account_register">Don\'t have account? Register</string>
+    <string name="reg_full_name">Full Name</string>
+    <string name="reg_phone_number">Phone Number</string>
+    <string name="reg_nic">NIC</string>
+    <string name="reg_host_name">Host Name</string>
+    <string name="reg_br_number">BR Number</string>
+    <string name="reg_nearest_town">Nearest Town</string>
+    <string name="reg_address">Address</string>
+    <string name="reg_email">Email</string>
+    <string name="host_registration_btn">Host Registration</string>
 </resources>
