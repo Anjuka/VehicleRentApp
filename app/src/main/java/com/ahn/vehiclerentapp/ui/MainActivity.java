@@ -1,8 +1,10 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.ahn.vehiclerentapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

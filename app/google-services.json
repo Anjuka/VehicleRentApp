@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "767412279260",
+    "project_id": "vehiclerentapp-25224",
+    "storage_bucket": "vehiclerentapp-25224.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767412279260:android:6cbf9d266c480439586119",
+        "android_client_info": {
+          "package_name": "com.ahn.vehiclerentapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767412279260-qvech38brn4g29paih6kn9iac8srk2uf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5FIKkVFD_kRuS_FGBhgYXvyDlfZzysj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767412279260-qvech38brn4g29paih6kn9iac8srk2uf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
