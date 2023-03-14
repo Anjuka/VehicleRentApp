@@ -1,15 +1,33 @@
 package com.ahn.vehiclerentapp.ui;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.RequestUserPermission;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final int PERMISSIONS_REQUEST_CODE = 100;
+   String[] permissions = {
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+    };
 
     private TextView tv_register;
 
@@ -27,5 +45,30 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        RequestUserPermission requestUserPermission = new RequestUserPermission(this);
+        requestUserPermission.verifyStoragePermissions();
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.
+                PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest
+                    .permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this,new String[]{
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            },1000);
+            return;
+        }
+
+        // do we have a camera?
+        if (!getPackageManager()
+                .hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            Toast.makeText(this, "No camera on this device", Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 }
