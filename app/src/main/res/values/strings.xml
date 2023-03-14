@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VehicleRentApp</string>
+    <string name="app_name">DriveMe SL</string>
     <string name="login_txt">Login</string>
     <string name="password_txt">Password</string>
     <string name="login_btn_txt">Login</string>

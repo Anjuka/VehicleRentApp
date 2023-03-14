@@ -18,7 +18,7 @@
             android:name=".ui.ClientRegistrationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -36,7 +36,7 @@
             android:name=".ui.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
