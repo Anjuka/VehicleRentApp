@@ -14,4 +14,14 @@
     <string name="reg_email">Email</string>
     <string name="host_registration_btn">Host Registration</string>
     <string name="select_image_from">Select Image From,</string>
+    <string name="please_select_your_type_for_proceed">Please select your type for proceed,</string>
+    <string name="active_town">Active Town</string>
+    <string name="driving_licence_pic">Driving Licence Photo</string>
+    <string name="submit">Submit</string>
+    <string name="driver_register">Driver Registration</string>
+    <string name="host_registration">Host Registration</string>
+    <string name="car">Car</string>
+    <string name="van">Van</string>
+    <string name="bus">Bus</string>
+    <string name="tuk">Tuk-Tuk</string>
 </resources>

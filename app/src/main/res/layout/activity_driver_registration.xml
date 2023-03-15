@@ -11,26 +11,26 @@
         android:id="@+id/circleImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="28dp"
         android:src="@drawable/default_pfp"
         app:civ_border_color="@color/colorPrimaryDark"
         app:civ_border_width="1dp"
-        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
         tools:ignore="ImageContrastCheck" />
 
+
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/host_registration"
+        android:text="@string/driver_register"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_back" />
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -79,15 +79,30 @@
                     android:maxLines="1" />
 
 
-                <EditText
-                    android:id="@+id/et_host_name"
+                <LinearLayout
+                    android:id="@+id/ll_licen_pic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/reg_host_name"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:orientation="vertical"
+                    android:background="@color/seventy_white">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/driving_licence_pic"
+                        android:inputType="text"
+                        android:textSize="18dp"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ic_outline_add_a_photo_24"/>
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/editTextEmail"
@@ -114,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/reg_nearest_town"
+                    android:hint="@string/active_town"
                     android:inputType="text"
                     android:maxLines="1" />
 
@@ -132,14 +147,36 @@
                     android:textAlignment="gravity" />
 
 
-                <EditText
+                <TextView
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/reg_email"
-                    android:inputType="text"
+                    android:text="Drive Type"
+                    android:textSize="18dp"
                     android:maxLines="1" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <RadioButton
+                        android:id="@+id/rb_airport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Airport"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_trip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Trip"/>
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_password"
@@ -167,9 +204,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/button_back"
-            android:text="Register"
+            android:text="@string/submit"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -210,73 +247,74 @@
         android:visibility="invisible"
         android:background="@color/fade_color">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/fade_color"
-        android:layout_marginHorizontal="24dp">
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="36dp"
-            android:text="@string/select_image_from"
-            android:textColor="@color/splash_background"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_camera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35dp"
-            android:background="@drawable/button_back_boadr"
-            android:text="Camera"
-            android:textAllCaps="false"
-            android:textColor="@color/splash_background"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-        <Button
-            android:id="@+id/btn_device"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="35dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_back_boadr"
-            android:text="Gallery"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_camera" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/fade_color"
+            android:layout_marginHorizontal="24dp">
 
-        <ImageView
-            android:id="@+id/iv_close_select_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView6"
-            app:srcCompat="@drawable/ic_baseline_close_24"
-            app:tint="@color/splash_background" />
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="36dp"
+                android:text="@string/select_image_from"
+                android:textColor="@color/splash_background"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btn_camera"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="35dp"
+                android:background="@drawable/button_back_boadr"
+                android:text="Camera"
+                android:textAllCaps="false"
+                android:textColor="@color/splash_background"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginTop="50sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <Button
+                android:id="@+id/btn_device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="35dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_back_boadr"
+                android:text="Gallery"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_camera" />
+
+            <ImageView
+                android:id="@+id/iv_close_select_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView6"
+                app:srcCompat="@drawable/ic_baseline_close_24"
+                app:tint="@color/splash_background" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

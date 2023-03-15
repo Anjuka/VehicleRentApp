@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ahn.vehiclerentapp.R;
@@ -36,11 +37,31 @@ public class ClientRegistrationActivity extends AppCompatActivity {
     private ConstraintLayout cl_select_img;
     private Button btn_camera;
     private Button btn_device;
+    private Button btn_as_client;
     private ImageView iv_close_select_img;
+    private EditText et_name;
+    private EditText et_nic;
+    private EditText et_host_name;
+    private EditText et_br_num;
+    private EditText et_nearest_town;
+    private EditText et_address;
+    private EditText et_email;
+    private EditText et_password;
+    private EditText et_password_re;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_FROM_GALLERY = 2;
     private Uri mImageUri;
+
+    private String full_name = "";
+    private String NIC = "";
+    private String host_name = "";
+    private String br_number = "";
+    private String nearest_town = "";
+    private String address = "";
+    private String email = "";
+    private String password = "";
+    private String password_re = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +74,16 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         btn_camera = findViewById(R.id.btn_camera);
         btn_device = findViewById(R.id.btn_device);
         iv_close_select_img = findViewById(R.id.iv_close_select_img);
+        btn_as_client = findViewById(R.id.btn_as_client);
+        et_name = findViewById(R.id.et_full_name);
+        et_nic = findViewById(R.id.et_nic);
+        et_host_name = findViewById(R.id.et_host_name);
+        et_br_num = findViewById(R.id.et_br);
+        et_nearest_town = findViewById(R.id.et_nearest_town);
+        et_address = findViewById(R.id.et_address);
+        et_email = findViewById(R.id.et_email);
+        et_password = findViewById(R.id.et_password);
+        et_password_re = findViewById(R.id.et_password_re);
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.
                 PERMISSION_GRANTED) {
@@ -94,6 +125,13 @@ public class ClientRegistrationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 selectImages();
                 cl_select_img.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        btn_as_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
