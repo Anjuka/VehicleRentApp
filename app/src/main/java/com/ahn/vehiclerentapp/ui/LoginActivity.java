@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //loadLocal();
         setContentView(R.layout.activity_login);
 
         tv_register = findViewById(R.id.tv_register);
@@ -71,4 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                     .show();
         }
     }
+
+   /* public void loadLocal (){
+        SharedPreferences sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE);
+        String lang = sharedPreferences.getString("lan_settings", "en");
+        setLocal(lang);
+    }*/
 }

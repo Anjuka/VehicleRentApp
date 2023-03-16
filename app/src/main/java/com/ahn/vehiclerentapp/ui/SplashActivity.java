@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import com.ahn.vehiclerentapp.ChooseLanguageActivity;
 import com.ahn.vehiclerentapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +30,12 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                if (currentUser == null) {
+                Intent i = new Intent(getApplicationContext(), ChooseLanguageActivity.class);
+                startActivity(i);
+                finish();
+                overridePendingTransition(0, 0);
+
+                /*if (currentUser == null) {
                     Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(i);
                     finish();
@@ -40,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(i);
                     finish();
                     overridePendingTransition(0, 0);
-                }
+                }*/
             }
         }, 3000);
     }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DriveMe SL</string>
+    <string name="login_txt">පිවිසීම</string>
+    <string name="password_txt">මුරපදය</string>
+    <string name="login_btn_txt">පිවිසීම</string>
+    <string name="don_t_have_account_register">ගිණුමක් නැද්ද? ලියාපදිංචි වන්න</string>
+    <string name="reg_phone_number">දුරකථන අංකය</string>
+    <string name="reg_nic">"ජා.හැ. අංකය "</string>
+    <string name="reg_full_name">සම්පූර්ණ නම</string>
+    <string name="reg_host_name">සත්කාරක නාමය</string>
+    <string name="reg_br_number">ව්යා ලි. අංකය</string>
+    <string name="reg_nearest_town">ආසන්නතම නගරය</string>
+    <string name="reg_address">ලිපිනය</string>
+    <string name="reg_email">විද්යුත් ලිපිනය</string>
+    <string name="host_registration_btn">සත්කාරක ලියාපදිංචිය</string>
+    <string name="select_image_from">පින්තූර තෝරන්න,</string>
+    <string name="please_select_your_type_for_proceed">කරුණාකර ඉදිරියට යාමට ඔබේ වර්ගය තෝරන්න,</string>
+    <string name="active_town">සක්රීය නගරය</string>
+    <string name="driving_licence_pic">රි. බලපත්‍රයේ ඡායාරූපය</string>
+    <string name="submit">යොමු කරන්න</string>
+    <string name="driver_register">රියදුරු ලියාපදිංචිය</string>
+    <string name="host_registration">සත්කාරක ලියාපදිංචිය</string>
+    <string name="car">කාර්</string>
+    <string name="van">වෑන්</string>
+    <string name="bus">බස්</string>
+    <string name="tuk">ත්‍රිරෝද රථ</string>
+    <string name="gallery">ගැලරිය</string>
+    <string name="camera">කැමරාව</string>
+    <string name="or">- හෝ -</string>
+    <string name="driver_registration">රියදුරු ලියාපදිංචිය</string>
+    <string name="vehicle_registration">වාහන ලියාපදිංචි</string>
+    <string name="vehicle_type">වාහන වර්ගය</string>
+    <string name="upload_vehicle_images">වාහන රූප උඩුගත කරන්න</string>
+</resources>
