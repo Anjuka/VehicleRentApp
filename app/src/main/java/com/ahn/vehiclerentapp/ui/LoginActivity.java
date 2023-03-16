@@ -15,9 +15,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahn.vehiclerentapp.OTPManageActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.RequestUserPermission;
 
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     private TextView tv_register;
+    private Button btn_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         tv_register = findViewById(R.id.tv_register);
+        btn_login = findViewById(R.id.btn_login);
 
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +76,15 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "No camera on this device", Toast.LENGTH_LONG)
                     .show();
         }
+
+
+        btn_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), OTPManageActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
    /* public void loadLocal (){

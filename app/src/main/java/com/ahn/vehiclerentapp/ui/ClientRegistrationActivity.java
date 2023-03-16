@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.R;
 import com.bumptech.glide.Glide;
@@ -48,6 +49,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
     private EditText et_email;
     private EditText et_password;
     private EditText et_password_re;
+    private EditText et_mobile_num;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_FROM_GALLERY = 2;
@@ -57,6 +59,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
     private String NIC = "";
     private String host_name = "";
     private String br_number = "";
+    private String mobile_number = "";
     private String nearest_town = "";
     private String address = "";
     private String email = "";
@@ -75,6 +78,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         btn_device = findViewById(R.id.btn_device);
         iv_close_select_img = findViewById(R.id.iv_close_select_img);
         btn_as_client = findViewById(R.id.btn_as_client);
+        et_mobile_num = findViewById(R.id.et_mobile_num);
         et_name = findViewById(R.id.et_full_name);
         et_nic = findViewById(R.id.et_nic);
         et_host_name = findViewById(R.id.et_host_name);
@@ -131,7 +135,33 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         btn_as_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                full_name = et_name.getText().toString().trim();
+                NIC = et_nic.getText().toString().trim();
+                host_name = et_host_name.getText().toString().trim();
+                mobile_number = et_mobile_num.getText().toString().trim();
+                br_number = et_br_num.getText().toString().trim();
+                nearest_town = et_nearest_town.getText().toString().trim();
+                address = et_address.getText().toString().trim();
+                email = et_email.getText().toString().trim();
+                password = et_password.getText().toString().trim();
+                password_re = et_password_re.getText().toString().trim();
+                
+                if (password.equals(password_re)){
+                    if (full_name.isEmpty() || NIC.isEmpty() || host_name.isEmpty() || mobile_number.isEmpty() ||
+                            nearest_town.isEmpty() || address.isEmpty() || email.isEmpty() || password.isEmpty() || password_re.isEmpty()){
 
+                        String msg = getString(R.string.fill_empty_msg);
+                        Toast.makeText(ClientRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        //client registration process
+
+                    }
+                }
+                else {
+                    String msg = getString(R.string.pass_not_match_msg);
+                    Toast.makeText(ClientRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -33,4 +33,11 @@
     <string name="vehicle_registration">Vehicle Registration</string>
     <string name="vehicle_type">Vehicle Type</string>
     <string name="upload_vehicle_images">Upload Vehicle Images</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="airport">Airport</string>
+    <string name="trip">Trip</string>
+    <string name="pass_not_match_msg">Passwords are not matching!</string>
+    <string name="fill_empty_msg">Please fill the mandatory data!</string>
+    <string name="verify">Verify</string>
+    <string name="otp_incorrect_mdg">OTP is incorrect, Please try again.</string>
 </resources>

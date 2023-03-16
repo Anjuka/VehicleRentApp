@@ -9,7 +9,7 @@
     <string name="reg_nic">"ජා.හැ. අංකය "</string>
     <string name="reg_full_name">සම්පූර්ණ නම</string>
     <string name="reg_host_name">සත්කාරක නාමය</string>
-    <string name="reg_br_number">ව්යා ලි. අංකය</string>
+    <string name="reg_br_number">ව්යා. ලි. අංකය</string>
     <string name="reg_nearest_town">ආසන්නතම නගරය</string>
     <string name="reg_address">ලිපිනය</string>
     <string name="reg_email">විද්යුත් ලිපිනය</string>
@@ -32,4 +32,11 @@
     <string name="vehicle_registration">වාහන ලියාපදිංචි</string>
     <string name="vehicle_type">වාහන වර්ගය</string>
     <string name="upload_vehicle_images">වාහන රූප උඩුගත කරන්න</string>
+    <string name="re_enter_password">මුරපදය නැවත ඇතුල් කරන්න</string>
+    <string name="airport">ගුවන් තොටුපළ</string>
+    <string name="trip">චාරිකා</string>
+    <string name="pass_not_match_msg">මුරපද නොගැලපේ!</string>
+    <string name="fill_empty_msg">කරුණාකර අනිවාර්ය දත්ත පුරවන්න!</string>
+    <string name="verify">තහවුරු කරන්න</string>
+    <string name="otp_incorrect_mdg">OTP වැරදියි, කරුණාකර නැවත උත්සාහ කරන්න.</string>
 </resources>

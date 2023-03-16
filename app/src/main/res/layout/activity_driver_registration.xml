@@ -167,14 +167,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Airport"/>
+                        android:text="@string/airport"/>
 
                     <RadioButton
                         android:id="@+id/rb_trip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Trip"/>
+                        android:text="@string/trip"/>
 
                 </LinearLayout>
 
@@ -183,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Password"
+                    android:hint="@string/password_txt"
                     android:inputType="textPassword"
                     android:maxLines="1" />
 
@@ -192,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Re-Enter Password"
+                    android:hint="@string/re_enter_password"
                     android:inputType="textPassword"
                     android:maxLines="1" />
 
