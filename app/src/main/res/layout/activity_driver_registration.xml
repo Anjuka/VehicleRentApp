@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ClientRegistrationActivity"
-    android:background="@color/background_dark1">
+    android:background="@color/background">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
@@ -26,20 +26,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/driver_register"
-        android:textColor="@color/white"
+
+        android:textColor="@color/gray"
         android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="40dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/cust_back_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +51,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/cust_back_1"
             app:layout_constraintBottom_toTopOf="@+id/btn_as_client"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,8 +59,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/et_full_name"
@@ -67,7 +67,10 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/reg_full_name"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
                 <EditText
                     android:id="@+id/et_nic"
@@ -76,7 +79,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/reg_nic"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
 
                 <LinearLayout
@@ -84,7 +90,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="@color/seventy_white">
+                    android:background="@drawable/et_back"
+                    android:layout_marginTop="8dp"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -93,7 +102,8 @@
                         android:text="@string/driving_licence_pic"
                         android:inputType="text"
                         android:textSize="18dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        />
 
                     <ImageView
                         android:layout_gravity="center"
@@ -111,7 +121,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/reg_phone_number"
                     android:inputType="phone"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
 
                 <EditText
@@ -121,7 +134,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/reg_br_number"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
 
                 <EditText
@@ -131,7 +147,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/active_town"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
 
                 <EditText
@@ -144,7 +163,10 @@
                     android:inputType="textMultiLine"
                     android:lines="4"
                     android:maxLines="4"
-                    android:textAlignment="gravity" />
+                    android:textAlignment="gravity"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
 
                 <TextView
@@ -154,13 +176,16 @@
                     android:layout_marginTop="10dp"
                     android:text="Drive Type"
                     android:textSize="18dp"
-                    android:maxLines="1" />
+                    android:maxLines="1"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp" >
 
                     <RadioButton
                         android:id="@+id/rb_airport"
@@ -185,7 +210,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/password_txt"
                     android:inputType="textPassword"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
                 <EditText
                     android:id="@+id/et_password_re"
@@ -194,7 +222,10 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/re_enter_password"
                     android:inputType="textPassword"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:background="@drawable/et_back"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="8dp"/>
 
             </LinearLayout>
         </ScrollView>
@@ -204,7 +235,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/button_back"
             android:text="@string/submit"
             android:textAllCaps="false"
@@ -224,7 +255,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_settings_24"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-        app:layout_constraintEnd_toEndOf="@+id/circleImageView" />
+        app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+        app:tint="@color/gray" />
 
     <ImageView
         android:id="@+id/iv_back"
@@ -234,7 +266,29 @@
         android:layout_marginTop="24dp"
         android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/gray" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_back"
+        app:srcCompat="@drawable/logo" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height=".5dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_select_img"

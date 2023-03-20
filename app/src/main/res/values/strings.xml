@@ -2,8 +2,8 @@
     <string name="app_name">DriveMe SL</string>
     <string name="login_txt">Login</string>
     <string name="password_txt">Password</string>
-    <string name="login_btn_txt">Login</string>
-    <string name="don_t_have_account_register">Don\'t have account? Register</string>
+    <string name="login_btn_txt">Sign in</string>
+    <string name="don_t_have_account_register">Don’t have an account?  Sign up here</string>
     <string name="reg_full_name">Full Name</string>
     <string name="reg_phone_number">Phone Number</string>
     <string name="reg_nic">NIC</string>

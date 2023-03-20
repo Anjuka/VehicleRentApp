@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ahn.vehiclerentapp.ui.LoginActivity;
 
@@ -15,8 +16,8 @@ import java.util.Locale;
 
 public class ChooseLanguageActivity extends AppCompatActivity {
 
-    private ConstraintLayout cl_english;
-    private ConstraintLayout cl_sinhala;
+    private TextView cl_english;
+    private TextView cl_sinhala;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
