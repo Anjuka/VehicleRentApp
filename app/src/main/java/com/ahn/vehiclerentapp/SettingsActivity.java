@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.ahn.vehiclerentapp.models.CityData;
@@ -23,10 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DriverRegistrationActivity extends AppCompatActivity {
-
-    private Button btn_as_client;
-    private Spinner sp_nearest_town;
+public class SettingsActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
@@ -36,18 +33,30 @@ public class DriverRegistrationActivity extends AppCompatActivity {
     private ArrayList<CityDataList> cityDataLists = new ArrayList<>();
     private ArrayList<String> cities = new ArrayList<>();
 
+    private Spinner et_nearest_town;
+    private ImageView iv_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_registration);
+        setContentView(R.layout.activity_settings);
 
         progressDialog = new ProgressDialog(this);
+
+        et_nearest_town = findViewById(R.id.et_nearest_town);
+        iv_back = findViewById(R.id.iv_back);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        btn_as_client  = findViewById(R.id.btn_as_client);
-        sp_nearest_town  = findViewById(R.id.sp_nearest_town);
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DriverDashoardActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         progressDialog.setMessage("Loading....");
         progressDialog.setCancelable(false);
@@ -67,8 +76,8 @@ public class DriverRegistrationActivity extends AppCompatActivity {
                                 cities.add(cityDataList1.getCity_name());
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(DriverRegistrationActivity.this, android.R.layout.simple_spinner_dropdown_item, cities);
-                            sp_nearest_town.setAdapter(adapter);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(SettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, cities);
+                            et_nearest_town.setAdapter(adapter);
 
                             progressDialog.cancel();
                         }
@@ -81,13 +90,6 @@ public class DriverRegistrationActivity extends AppCompatActivity {
                     }
                 });
 
-        btn_as_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DriverRegistrationActivity.this, VehicleRegActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        Log.d("TAG", "onCreate: cityDataLists " + cityDataLists);
     }
 }

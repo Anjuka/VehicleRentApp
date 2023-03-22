@@ -40,4 +40,17 @@
     <string name="fill_empty_msg">Please fill the mandatory data!</string>
     <string name="verify">Verify</string>
     <string name="otp_incorrect_mdg">OTP is incorrect, Please try again.</string>
+    <string name="post_a_new_trip">Post a new trip</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us">Just tap to contact us,</string>
+    <string name="tap_on_this_button_drme_team_will_contact_you_within_while">*Tap on this button, DRME team will contact you within while.</string>
+    <string name="make_an_inquiry">Make an inquiry</string>
+    <string name="send">Send</string>
+    <string name="type_something">Type something...</string>
+    <string name="profile">Profile</string>
+    <string name="language_settings">Language Settings</string>
+    <string name="update">Update</string>
+    <string name="complete">Complete</string>
+    <string name="accepted">Accepted</string>
+    <string name="new_posts">New Posts</string>
 </resources>

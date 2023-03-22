@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -140,6 +141,9 @@ public class OTPManageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 otp_receive = et_1.getText().toString().trim() + et_2.getText().toString().trim() +
                         et_3.getText().toString().trim() + et_4.getText().toString().trim();
+
+                Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);
+                startActivity(intent);
 
                 if (String.valueOf(otp_sent).equals(otp_receive)){
 

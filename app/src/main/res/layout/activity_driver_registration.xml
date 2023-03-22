@@ -139,9 +139,17 @@
                     android:paddingVertical="16dp"
                     android:paddingHorizontal="8dp"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/active_town"
+                    android:inputType="text"
+                    android:textSize="18dp"
+                    android:layout_weight="1"/>
 
-                <EditText
-                    android:id="@+id/et_nearest_town"
+                <Spinner
+                    android:id="@+id/sp_nearest_town"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -187,11 +195,17 @@
                     android:paddingVertical="16dp"
                     android:paddingHorizontal="8dp" >
 
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/rb_airport"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="@color/colorPrimary"
                         android:text="@string/airport"/>
 
                     <RadioButton
@@ -199,7 +213,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:buttonTint="@color/colorPrimary"
                         android:text="@string/trip"/>
+
+                    </RadioGroup>
 
                 </LinearLayout>
 

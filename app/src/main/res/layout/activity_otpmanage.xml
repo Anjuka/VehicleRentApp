@@ -6,20 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".OTPManageActivity"
     android:id="@+id/cl_main"
-    android:background="@color/background_dark1">
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height=".5dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OTP Verification"
-        android:textColor="@color/white"
+        android:textColor="@color/gray"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="30dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView11"
@@ -27,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:text="Code is sent to 0715170929"
-        android:textColor="@color/seventy_white"
+        android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +67,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginHorizontal="24dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,16 +79,16 @@
             android:id="@+id/et_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@color/background_dark2"
+            android:background="@drawable/et_back"
             android:gravity="center"
             android:inputType="number"
+            android:layout_marginRight="4dp"
             android:hint="0"
             android:maxLength="1"
             android:textAlignment="gravity"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/background_dark3"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/gray_light"
             android:textSize="48sp"
             android:textStyle="bold" />
 
@@ -77,16 +96,17 @@
             android:id="@+id/et_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@color/background_dark2"
+            android:background="@drawable/et_back"
             android:gravity="center"
             android:hint="0"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
             android:maxLength="1"
             android:inputType="number"
             android:textAlignment="gravity"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/background_dark3"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/gray_light"
             android:textSize="48sp"
             android:textStyle="bold" />
 
@@ -94,16 +114,17 @@
             android:id="@+id/et_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:maxLength="1"
-            android:background="@color/background_dark2"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
             android:gravity="center"
             android:hint="0"
             android:inputType="number"
             android:textAlignment="gravity"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/background_dark3"
+            android:textColorHint="@color/gray_light"
+            android:textColor="@color/gray"
+            android:background="@drawable/et_back"
             android:textSize="48sp"
             android:textStyle="bold" />
 
@@ -111,16 +132,52 @@
             android:id="@+id/et_4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:layout_weight="1"
             android:maxLength="1"
-            android:background="@color/background_dark2"
+            android:background="@drawable/et_back"
             android:gravity="center"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
             android:hint="0"
             android:inputType="number"
             android:textAlignment="gravity"
-            android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/background_dark3"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/gray_light"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLength="1"
+            android:background="@drawable/et_back"
+            android:gravity="center"
+            android:hint="0"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
+            android:inputType="number"
+            android:textAlignment="gravity"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/gray_light"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:maxLength="1"
+            android:background="@drawable/et_back"
+            android:gravity="center"
+            android:hint="0"
+            android:layout_marginStart="4dp"
+            android:inputType="number"
+            android:textAlignment="gravity"
+            android:textColor="@color/gray"
+            android:textColorHint="@color/gray_light"
             android:textSize="48sp"
             android:textStyle="bold" />
 
