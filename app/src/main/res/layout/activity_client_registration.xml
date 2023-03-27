@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ClientRegistrationActivity"
+    tools:context=".ui.host.ClientRegistrationActivity"
     android:background="@color/background">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -123,17 +123,26 @@
                     android:maxLines="1" />
 
 
-                <EditText
-                    android:id="@+id/et_nearest_town"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/active_town"
+                    android:inputType="text"
+                    android:textSize="18dp"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/sp_nearest_town"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="@string/reg_nearest_town"
+                    android:hint="@string/active_town"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:background="@drawable/et_back"
                     android:paddingVertical="16dp"
-                    android:paddingHorizontal="8dp"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:paddingHorizontal="8dp"/>
 
 
                 <EditText
@@ -164,7 +173,7 @@
                     android:inputType="text"
                     android:maxLines="1" />
 
-                <EditText
+               <!-- <EditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -186,7 +195,7 @@
                     android:paddingHorizontal="8dp"
                     android:hint="@string/re_enter_password"
                     android:inputType="textPassword"
-                    android:maxLines="1" />
+                    android:maxLines="1" />-->
 
             </LinearLayout>
         </ScrollView>

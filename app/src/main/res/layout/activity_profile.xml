@@ -89,6 +89,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_vehicle_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/gray"
+                android:text="@string/reg_nic"
+                android:textSize="12dp" />
+
             <EditText
                 android:id="@+id/et_nic"
                 android:layout_width="match_parent"
@@ -98,8 +107,19 @@
                 android:hint="@string/reg_nic"
                 android:inputType="text"
                 android:maxLines="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textColor="@color/gray"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp" />
+                android:paddingVertical="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:text="@string/reg_host_name"
+                android:textSize="14sp" />
 
 
             <EditText
@@ -111,8 +131,19 @@
                 android:hint="@string/reg_host_name"
                 android:inputType="text"
                 android:maxLines="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textColor="@color/gray"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp" />
+                android:paddingVertical="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:text="@string/reg_phone_number"
+                android:textSize="14sp" />
 
 
             <EditText
@@ -124,8 +155,19 @@
                 android:hint="@string/reg_phone_number"
                 android:inputType="phone"
                 android:maxLines="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textColor="@color/gray"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp" />
+                android:paddingVertical="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:text="@string/reg_br_number"
+                android:textSize="14sp" />
 
 
             <EditText
@@ -136,9 +178,20 @@
                 android:background="@drawable/et_back"
                 android:hint="@string/reg_br_number"
                 android:inputType="text"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textColor="@color/gray"
                 android:maxLines="1"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp" />
+                android:paddingVertical="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:text="@string/reg_nearest_town"
+                android:textSize="14sp" />
 
 
             <EditText
@@ -150,8 +203,19 @@
                 android:hint="@string/reg_nearest_town"
                 android:inputType="text"
                 android:maxLines="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:textColor="@color/gray"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp" />
+                android:paddingVertical="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:text="@string/reg_address"
+                android:textSize="14sp" />
 
 
             <EditText
@@ -164,10 +228,21 @@
                 android:hint="@string/reg_address"
                 android:inputType="textMultiLine"
                 android:lines="4"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:maxLines="4"
+                android:textColor="@color/gray"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp"
+                android:paddingVertical="10dp"
                 android:textAlignment="gravity" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:layout_marginTop="12dp"
+                android:text="@string/reg_email"
+                android:textSize="14sp" />
 
 
             <EditText
@@ -177,13 +252,26 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/et_back"
                 android:hint="@string/reg_email"
-                android:inputType="text"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/gray"
                 android:maxLines="1"
                 android:paddingHorizontal="8dp"
-                android:paddingVertical="16dp" />
+                android:paddingVertical="10dp" />
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/iv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_back"
+        app:srcCompat="@drawable/ic_baseline_power_settings_new_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

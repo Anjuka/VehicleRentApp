@@ -1,6 +1,6 @@
-package com.ahn.vehiclerentapp.ui;
+package com.ahn.vehiclerentapp.ui.host;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -8,26 +8,48 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ahn.vehiclerentapp.models.CityData;
+import com.ahn.vehiclerentapp.models.CityDataList;
+import com.ahn.vehiclerentapp.models.UserDetails;
+import com.ahn.vehiclerentapp.models.UserPostsDataList;
+import com.ahn.vehiclerentapp.otpVerifications.OTPManageActivity;
 import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.ui.driver.DriverRegistrationActivity;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,11 +66,11 @@ public class ClientRegistrationActivity extends AppCompatActivity {
     private EditText et_nic;
     private EditText et_host_name;
     private EditText et_br_num;
-    private EditText et_nearest_town;
+    private Spinner sp_nearest_town;
     private EditText et_address;
     private EditText et_email;
-    private EditText et_password;
-    private EditText et_password_re;
+    // private EditText et_password;
+    // private EditText et_password_re;
     private EditText et_mobile_num;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -66,10 +88,27 @@ public class ClientRegistrationActivity extends AppCompatActivity {
     private String password = "";
     private String password_re = "";
 
+    private ProgressDialog progressDialog;
+
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
+
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack;
+
+    private ArrayList<CityDataList> cityDataLists = new ArrayList<>();
+    private ArrayList<String> cities = new ArrayList<>();
+
+    UserDetails userDetails;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_registration);
+
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         iv_back = findViewById(R.id.iv_back);
         cv_user_img = findViewById(R.id.circleImageView);
@@ -83,17 +122,63 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         et_nic = findViewById(R.id.et_nic);
         et_host_name = findViewById(R.id.et_host_name);
         et_br_num = findViewById(R.id.et_br);
-        et_nearest_town = findViewById(R.id.et_nearest_town);
+        sp_nearest_town = findViewById(R.id.sp_nearest_town);
         et_address = findViewById(R.id.et_address);
         et_email = findViewById(R.id.et_email);
-        et_password = findViewById(R.id.et_password);
-        et_password_re = findViewById(R.id.et_password_re);
+        //  et_password = findViewById(R.id.et_password);
+        //  et_password_re = findViewById(R.id.et_password_re);
+
+        userDetails = new UserDetails();
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.
                 PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{ Manifest
+            ActivityCompat.requestPermissions(this, new String[]{Manifest
                     .permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
+
+        progressDialog.setMessage("Loading....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        firebaseFirestore.collection("cities")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        List<CityData> cityDataList = querySnapshot.toObjects(CityData.class);
+                        cityDataLists.clear();
+                        if (cityDataList.get(0).getArrayList() != null) {
+                            cityDataLists.addAll(cityDataList.get(0).getArrayList());
+                            Log.d("TAG", "onSuccess: ");
+
+                            for (CityDataList cityDataList1 : cityDataLists) {
+                                cities.add(cityDataList1.getCity_name());
+                            }
+
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>(ClientRegistrationActivity.this, android.R.layout.simple_spinner_dropdown_item, cities);
+                            sp_nearest_town.setAdapter(adapter);
+
+                            progressDialog.cancel();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "onFailure: " + e.getLocalizedMessage());
+                        progressDialog.cancel();
+                    }
+                });
+
+        sp_nearest_town.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                nearest_town = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,35 +220,85 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         btn_as_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 full_name = et_name.getText().toString().trim();
                 NIC = et_nic.getText().toString().trim();
                 host_name = et_host_name.getText().toString().trim();
                 mobile_number = et_mobile_num.getText().toString().trim();
+                mobile_number = "+94" + mobile_number;
                 br_number = et_br_num.getText().toString().trim();
-                nearest_town = et_nearest_town.getText().toString().trim();
                 address = et_address.getText().toString().trim();
                 email = et_email.getText().toString().trim();
-                password = et_password.getText().toString().trim();
-                password_re = et_password_re.getText().toString().trim();
-                
-                if (password.equals(password_re)){
-                    if (full_name.isEmpty() || NIC.isEmpty() || host_name.isEmpty() || mobile_number.isEmpty() ||
-                            nearest_town.isEmpty() || address.isEmpty() || email.isEmpty() || password.isEmpty() || password_re.isEmpty()){
+                //  password = et_password.getText().toString().trim();
+                //  password_re = et_password_re.getText().toString().trim();
 
-                        String msg = getString(R.string.fill_empty_msg);
-                        Toast.makeText(ClientRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                //TODO
+                //   registerWithPhone();
+
+                if (full_name.isEmpty() || NIC.isEmpty() || host_name.isEmpty() || mobile_number.isEmpty() ||
+                        nearest_town.isEmpty() || address.isEmpty() || email.isEmpty()) {
+
+                    String msg = getString(R.string.fill_empty_msg);
+                    Toast.makeText(ClientRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+                } else {
+                    //client registration process
+                    ArrayList<UserPostsDataList> userPostsDataLists = new ArrayList<>();
+
+                    if (mImageUri == null){
+                        userDetails = new UserDetails(full_name, NIC, host_name,
+                                mobile_number, br_number, nearest_town, address, email, "", userPostsDataLists);
                     }
                     else {
-                        //client registration process
 
+                        userDetails = new UserDetails(full_name, NIC, host_name,
+                                mobile_number, br_number, nearest_town, address, email, mImageUri.toString(), userPostsDataLists);
                     }
-                }
-                else {
-                    String msg = getString(R.string.pass_not_match_msg);
-                    Toast.makeText(ClientRegistrationActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+                    registerWithPhone();
                 }
             }
         });
+    }
+
+    private void registerWithPhone() {
+
+        showProgress("Loading...");
+
+        mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+
+            }
+
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+                hideProgress();
+                Toast.makeText(ClientRegistrationActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("SMS", "onVerificationFailed: " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onCodeSent(@NonNull String verification_code,
+                                   @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+
+
+                hideProgress();
+                Intent intent = new Intent(ClientRegistrationActivity.this, OTPManageActivity.class);
+                intent.putExtra("phone_num", mobile_number);
+                intent.putExtra("otp", verification_code);
+                intent.putExtra("reg_type", "host");
+                intent.putExtra("user_details", userDetails);
+                startActivity(intent);
+            }
+        };
+
+        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
+                .setPhoneNumber(mobile_number)
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setActivity(this)
+                .setCallbacks(mCallBack)
+                .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
     private void captureImages() {
@@ -219,5 +354,14 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         );
         // Save a file: path for use with ACTION_VIEW intents
         return imageFile;
+    }
+
+    private void showProgress(String msg) {
+        progressDialog.setMessage(msg);
+        progressDialog.show();
+    }
+
+    private void hideProgress() {
+        progressDialog.cancel();
     }
 }

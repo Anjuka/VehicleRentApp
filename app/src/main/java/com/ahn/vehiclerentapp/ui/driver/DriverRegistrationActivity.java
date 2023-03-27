@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.ui.driver;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.VehicleRegActivity;
 import com.ahn.vehiclerentapp.models.CityData;
 import com.ahn.vehiclerentapp.models.CityDataList;
 import com.google.android.gms.tasks.OnFailureListener;

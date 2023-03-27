@@ -14,14 +14,32 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".DriverDashoardActivity"
+            android:name=".PostCreateActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".otpVerifications.OTPVerificationLoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.driver.DriverDashoardActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -57,7 +75,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".HostDashoardActivity"
+            android:name=".ui.host.HostDashoardActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -66,7 +84,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".OTPManageActivity"
+            android:name=".otpVerifications.OTPManageActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -93,7 +111,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".DriverRegistrationActivity"
+            android:name=".ui.driver.DriverRegistrationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -102,7 +120,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.ClientRegistrationActivity"
+            android:name=".ui.host.ClientRegistrationActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -129,7 +147,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:windowSoftInputMode="adjustResize|stateHidden">

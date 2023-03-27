@@ -14,6 +14,7 @@ import android.widget.Spinner;
 
 import com.ahn.vehiclerentapp.models.CityData;
 import com.ahn.vehiclerentapp.models.CityDataList;
+import com.ahn.vehiclerentapp.ui.driver.DriverDashoardActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,6 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), DriverDashoardActivity.class);
                 startActivity(intent);
                 finish();
+                overridePendingTransition(0, 0);
             }
         });
 

@@ -6,22 +6,29 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahn.vehiclerentapp.OTPManageActivity;
+import com.ahn.vehiclerentapp.otpVerifications.OTPManageActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.RequestUserPermission;
+import com.ahn.vehiclerentapp.otpVerifications.OTPVerificationLoginActivity;
+import com.ahn.vehiclerentapp.ui.host.ClientRegistrationActivity;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthOptions;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,6 +41,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView tv_register;
     private Button btn_login;
+    private EditText et_phone_number;
+
+    private String phone_number = "";
+
+    private ProgressDialog progressDialog;
+
+    private FirebaseAuth firebaseAuth;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         //loadLocal();
         setContentView(R.layout.activity_login);
 
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
         tv_register = findViewById(R.id.tv_register);
         btn_login = findViewById(R.id.btn_login);
+        et_phone_number = findViewById(R.id.et_phone_number);
 
         tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +101,45 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), OTPManageActivity.class);
-                startActivity(intent);
+                phone_number = "+94" + et_phone_number.getText().toString().trim();
+                loginWithPhone();
             }
         });
+    }
+
+    private void loginWithPhone() {
+        showProgress("Loading...");
+        mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+
+            }
+
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+                hideProgress();
+                Toast.makeText(LoginActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("SMS", "onVerificationFailed: " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onCodeSent(@NonNull String verification_code,
+                                   @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                hideProgress();
+                Intent intent = new Intent(LoginActivity.this, OTPVerificationLoginActivity.class);
+                intent.putExtra("phone_num", phone_number);
+                intent.putExtra("otp", verification_code);
+                startActivity(intent);
+            }
+        };
+
+        PhoneAuthOptions options = PhoneAuthOptions.newBuilder(firebaseAuth)
+                .setPhoneNumber(phone_number)
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setActivity(this)
+                .setCallbacks(mCallBack)
+                .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
    /* public void loadLocal (){
@@ -92,4 +147,12 @@ public class LoginActivity extends AppCompatActivity {
         String lang = sharedPreferences.getString("lan_settings", "en");
         setLocal(lang);
     }*/
+   private void showProgress(String msg){
+       progressDialog.setMessage(msg);
+       progressDialog.show();
+   }
+
+    private void hideProgress(){
+        progressDialog.cancel();
+    }
 }

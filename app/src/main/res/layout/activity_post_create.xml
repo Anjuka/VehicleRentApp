@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".PostCreateActivity">
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/gray" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_submit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="10dp"
+        android:rotation="180"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/down_arrow_lotti"
+        app:tint="@color/gray" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:visibility="gone"
+        android:background="@drawable/btn_back"
+        android:paddingVertical="1dp"
+        android:paddingHorizontal="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_submit"
+        app:layout_constraintStart_toStartOf="@+id/iv_submit"
+        app:layout_constraintTop_toBottomOf="@+id/iv_submit" />
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height=".5dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_post"
+        android:textColor="@color/gray"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="24dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@string/type_of_journey"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/sp_trip_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_back_spin"
+                android:hint="@string/active_town"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/cl_drop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_pick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/airport_drop"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/sp_pick"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/et_back_spin"
+                        android:hint="@string/active_town"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pick" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/cl_pick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_drop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address_pick"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/et_back_spin"
+                        android:gravity="start"
+                        android:hint="@string/reg_address"
+                        android:inputType="textMultiLine"
+                        android:lines="6"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="16dp"
+                        android:textAlignment="gravity"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_drop" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/cl_tour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_tour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tour"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <!--<TextView
+                        android:id="@+id/tv_tour_destination"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/destination"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tour" />
+
+                    <Spinner
+                        android:id="@+id/sp_tour_destination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/et_back_spin"
+                        android:hint="@string/active_town"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tour_destination" />-->
+
+                    <TextView
+                        android:id="@+id/tv_tour_no_nights"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/no_of_nights"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/sp_tour_destination" />
+
+                    <Spinner
+                        android:id="@+id/sp_tour_nights"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/et_back_spin"
+                        android:hint="@string/active_town"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tour_no_nights" />
+
+
+                    <TextView
+                        android:id="@+id/tv_tour_night_dec_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/night_stay_type"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/sp_tour_destination" />
+
+                        <RadioGroup
+                            android:id="@+id/rb_grp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rb_same_destination"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/colorPrimary"
+                                android:text="@string/same_destination"
+                                android:textColor="@color/gray"/>
+
+                            <RadioButton
+                                android:id="@+id/rb_different_destination"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/colorPrimary"
+                                android:text="@string/different_destination"
+                                android:textColor="@color/gray" />
+
+                        </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_tour_destination"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/destination"
+                        android:textSize="18sp"
+                        android:visibility="visible"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tour" />
+
+                    <Spinner
+                        android:id="@+id/sp_tour_destination"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/et_back_spin"
+                        android:hint="@string/active_town"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingHorizontal="8dp"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_tour_destination" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_night_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_night_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_1"
+                            android:textSize="12sp"
+                            android:visibility="visible"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:visibility="visible"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_2"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_3"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_4"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_5"
+                            android:visibility="gone"
+                            android:textSize="12sp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_6"
+                            android:visibility="gone"
+                            android:textSize="12sp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_7"
+                            android:visibility="gone"
+                            android:textSize="12sp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_8"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_9"
+                            android:visibility="gone"
+                            android:textSize="12sp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                        <TextView
+                            android:id="@+id/tv_night_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/night_10"
+                            android:textSize="12sp"
+                            android:visibility="gone"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginStart="30dp"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+                        <Spinner
+                            android:id="@+id/sp_night_10"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:background="@drawable/et_back_spin"
+                            android:hint="@string/active_town"
+                            android:inputType="text"
+                            android:visibility="gone"
+                            android:maxLines="1"
+                            android:paddingHorizontal="8dp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+                    </LinearLayout>
+
+                    <!-- <TextView
+                android:id="@+id/tv_tour_stays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stay_locations"
+                android:textSize="18sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                app:layout_constraintTop_toBottomOf="@+id/sp_tour_destination" />
+
+
+            <TextView
+                android:id="@+id/tv_night_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/night_1"
+                android:textSize="16sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+            <Spinner
+                android:id="@+id/sp_night_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/et_back"
+                android:hint="@string/active_town"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                app:layout_constraintTop_toBottomOf="@+id/tv_night_1" />
+
+
+
+            <TextView
+                android:id="@+id/tv_night_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/night_2"
+                android:textSize="16sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="30dp"
+                app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tour_stays" />
+
+            <Spinner
+                android:id="@+id/sp_night_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/et_back"
+                android:hint="@string/active_town"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_tour"
+                app:layout_constraintTop_toBottomOf="@+id/tv_night_2" />-->
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_no_passengers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="text"
+                android:text="@string/number_of_passengers"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/sp_no_passengers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_back_spin"
+                android:hint="@string/active_town"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="8dp" />
+
+            <TextView
+                android:id="@+id/tv_vehicle_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:inputType="text"
+                android:text="Vehicle Type"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/sp_vehicle_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/et_back_spin"
+                android:hint="@string/active_town"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingHorizontal="8dp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/date"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/et_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/et_back"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:drawableRight="@drawable/ic_baseline_calendar_month_24"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/date"
+                        android:inputType="date"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="#111111"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_mani_date" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:text="@string/time"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/et_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/et_back"
+                        android:clickable="false"
+                        android:cursorVisible="false"
+                        android:drawableRight="@drawable/ic_baseline_access_time_24"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="@string/time"
+                        android:inputType="date"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="#111111"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/et_mani_date" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/btn_back"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        android:visibility="visible"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+        app:layout_constraintStart_toStartOf="@+id/scrollView2" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_submit"
+        app:layout_constraintEnd_toEndOf="@+id/btn_submit"
+        app:layout_constraintTop_toTopOf="@+id/btn_submit"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/dot_lotti"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "767412279260-bm6e23iv1oapipktt3g4r9pabq13tjpo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahn.vehiclerentapp",
+            "certificate_hash": "39c3c698bc1090f55202d5b5565e2b3587aa6548"
+          }
+        },
+        {
           "client_id": "767412279260-qvech38brn4g29paih6kn9iac8srk2uf.apps.googleusercontent.com",
           "client_type": 3
         }

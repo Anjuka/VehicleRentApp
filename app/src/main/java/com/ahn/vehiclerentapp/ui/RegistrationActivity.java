@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.ahn.vehiclerentapp.DriverRegistrationActivity;
+import com.ahn.vehiclerentapp.ui.driver.DriverRegistrationActivity;
 import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.ui.host.ClientRegistrationActivity;
 
 public class RegistrationActivity extends AppCompatActivity {
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HostDashoardActivity"
+    tools:context=".ui.host.HostDashoardActivity"
     android:background="@color/background">
 
     <ImageView
@@ -38,6 +38,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="15sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -56,6 +57,7 @@
         app:menu="@menu/bottom_nav_menu" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
@@ -71,12 +73,12 @@
             android:id="@+id/tv_post"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/background"
+            android:paddingVertical="8dp"
             android:text="@string/new_posts"
+            android:textAlignment="center"
             android:textColor="@color/gray"
             android:textStyle="bold"
-            android:background="@color/white"
-            android:textAlignment="center"
-            android:paddingVertical="8dp"
             app:layout_constraintEnd_toStartOf="@+id/tv_accepted"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -85,11 +87,11 @@
             android:id="@+id/v_post"
             android:layout_width="0dp"
             android:layout_height="3dp"
-            android:background="@color/bott"
             android:layout_marginHorizontal="5dp"
+            android:background="@color/bott"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_post"
             app:layout_constraintEnd_toEndOf="@+id/tv_post"
-            android:visibility="visible"
             app:layout_constraintStart_toStartOf="@+id/tv_post"
             app:layout_constraintTop_toBottomOf="@+id/tv_post" />
 
@@ -98,11 +100,11 @@
             android:id="@+id/tv_accepted"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/accepted"
             android:paddingVertical="8dp"
+            android:text="@string/accepted"
             android:textAlignment="center"
-            android:textStyle="bold"
             android:textColor="@color/gray_light"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/tv_complete"
             app:layout_constraintStart_toEndOf="@+id/tv_post"
             app:layout_constraintTop_toTopOf="parent" />
@@ -111,8 +113,8 @@
             android:id="@+id/v_accepted"
             android:layout_width="0dp"
             android:layout_height="3dp"
-            android:background="@color/bott"
             android:layout_marginHorizontal="5dp"
+            android:background="@color/bott"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_accepted"
             app:layout_constraintEnd_toEndOf="@+id/tv_accepted"
@@ -123,11 +125,11 @@
             android:id="@+id/tv_complete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/complete"
-            android:textColor="@color/gray_light"
             android:paddingVertical="8dp"
-            android:textStyle="bold"
+            android:text="@string/complete"
             android:textAlignment="center"
+            android:textColor="@color/gray_light"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_accepted"
             app:layout_constraintTop_toTopOf="parent" />
@@ -136,13 +138,24 @@
             android:id="@+id/v_complete"
             android:layout_width="0dp"
             android:layout_height="3dp"
-            android:background="@color/bott"
             android:layout_marginHorizontal="5dp"
+            android:background="@color/bott"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_complete"
             app:layout_constraintEnd_toEndOf="@+id/tv_complete"
             app:layout_constraintStart_toStartOf="@+id/tv_complete"
             app:layout_constraintTop_toBottomOf="@+id/tv_complete" />
+
+        <TextView
+            android:id="@+id/tv_not_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data_to_show"
+            android:textColor="@color/gray_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_accepted" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
