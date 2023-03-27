@@ -80,4 +80,5 @@
     <string name="night_stay_type">Night Stay Type</string>
     <string name="same_destination">Same Destination</string>
     <string name="different_destination">Different Destination</string>
+    <string name="pic_must_msg">Please take a profile picture</string>
 </resources>

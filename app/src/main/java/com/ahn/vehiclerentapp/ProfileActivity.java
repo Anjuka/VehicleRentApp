@@ -69,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
             else {
                 Glide.with(getApplicationContext())
                         .load(userDetails.getImage())
-                        .placeholder(R.drawable.ic_outline_account_circle_24)
+                        .placeholder(R.drawable.default_pfp)
                         .into(circleImageView2);
             }
 

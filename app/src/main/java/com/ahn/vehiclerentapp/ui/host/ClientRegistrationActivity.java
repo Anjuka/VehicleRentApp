@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +18,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -57,6 +59,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
 
     private ImageView iv_back;
     private CircleImageView cv_user_img;
+    private ConstraintLayout cl_main;
     private ConstraintLayout cl_select_img;
     private Button btn_camera;
     private Button btn_device;
@@ -110,6 +113,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        cl_main = findViewById(R.id.cl_main);
         iv_back = findViewById(R.id.iv_back);
         cv_user_img = findViewById(R.id.circleImageView);
         cl_select_img = findViewById(R.id.cl_select_img);
@@ -135,6 +139,13 @@ public class ClientRegistrationActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest
                     .permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
+
+        cl_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(cl_main);
+            }
+        });
 
         progressDialog.setMessage("Loading....");
         progressDialog.setCancelable(false);
@@ -190,7 +201,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         cv_user_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cl_select_img.setVisibility(View.VISIBLE);
+                captureImages();
             }
         });
 
@@ -234,6 +245,11 @@ public class ClientRegistrationActivity extends AppCompatActivity {
 
                 //TODO
                 //   registerWithPhone();
+
+                if (mImageUri == null || mImageUri.toString().equals("")){
+                    String msg_cam = getString(R.string.pic_must_msg);
+                    Toast.makeText(ClientRegistrationActivity.this, msg_cam, Toast.LENGTH_SHORT).show();
+                }
 
                 if (full_name.isEmpty() || NIC.isEmpty() || host_name.isEmpty() || mobile_number.isEmpty() ||
                         nearest_town.isEmpty() || address.isEmpty() || email.isEmpty()) {
@@ -339,6 +355,7 @@ public class ClientRegistrationActivity extends AppCompatActivity {
         }
         Glide.with(getApplicationContext())
                 .load(mImageUri)
+                .placeholder(R.drawable.default_pfp)
                 .into(cv_user_img);
     }
 
@@ -363,5 +380,10 @@ public class ClientRegistrationActivity extends AppCompatActivity {
 
     private void hideProgress() {
         progressDialog.cancel();
+    }
+
+    private void hideKeyboard(ConstraintLayout view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
