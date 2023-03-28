@@ -39,4 +39,6 @@
     <string name="fill_empty_msg">කරුණාකර අනිවාර්ය දත්ත පුරවන්න!</string>
     <string name="verify">තහවුරු කරන්න</string>
     <string name="otp_incorrect_mdg">OTP වැරදියි, කරුණාකර නැවත උත්සාහ කරන්න.</string>
+
+    <string name="settings">සැකසුම්</string>
 </resources>

@@ -144,14 +144,22 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                         Intent intentProfile = new Intent(getApplicationContext(), ProfileActivity.class);
                         intentProfile.putExtra("user_data", userDetails);
                         startActivity(intentProfile);
+                        finish();
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.about_us:
                         Intent intentAboutUS = new Intent(getApplicationContext(), AboutUsActivity.class);
+                        intentAboutUS.putExtra("user_data", userDetails);
                         startActivity(intentAboutUS);
+                        finish();
+                        overridePendingTransition(0, 0);
                         return true;
                         case R.id.settings:
                             Intent intentSettings = new Intent(getApplicationContext(), SettingsActivity.class);
+                            intentSettings.putExtra("user_data", userDetails);
                             startActivity(intentSettings);
+                            finish();
+                            overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
@@ -170,6 +178,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 v_accepted.setVisibility(View.INVISIBLE);
                 tv_complete.setTextColor(getResources().getColor(R.color.gray_light));
                 v_complete.setVisibility(View.INVISIBLE);
+                tv_post.setBackgroundColor(getResources().getColor(R.color.background));
+                tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.v_post:
                 tv_post.setTextColor(getResources().getColor(R.color.gray));
@@ -178,6 +189,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 v_accepted.setVisibility(View.INVISIBLE);
                 tv_complete.setTextColor(getResources().getColor(R.color.gray_light));
                 v_complete.setVisibility(View.INVISIBLE);
+                tv_post.setBackgroundColor(getResources().getColor(R.color.background));
+                tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.tv_accepted:
                 tv_accepted.setTextColor(getResources().getColor(R.color.gray));
@@ -186,6 +200,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 v_post.setVisibility(View.INVISIBLE);
                 tv_complete.setTextColor(getResources().getColor(R.color.gray_light));
                 v_complete.setVisibility(View.INVISIBLE);
+                tv_accepted.setBackgroundColor(getResources().getColor(R.color.background));
+                tv_post.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.v_accepted:
                 tv_accepted.setTextColor(getResources().getColor(R.color.gray));
@@ -194,6 +211,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 v_post.setVisibility(View.INVISIBLE);
                 tv_complete.setTextColor(getResources().getColor(R.color.gray_light));
                 v_complete.setVisibility(View.INVISIBLE);
+                tv_accepted.setBackgroundColor(getResources().getColor(R.color.background));
+                tv_post.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.tv_complete:
                 tv_complete.setTextColor(getResources().getColor(R.color.gray));
@@ -202,6 +222,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 v_accepted.setVisibility(View.INVISIBLE);
                 tv_post.setTextColor(getResources().getColor(R.color.gray_light));
                 v_post.setVisibility(View.INVISIBLE);
+                tv_complete.setBackgroundColor(getResources().getColor(R.color.background));
+                tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_post.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.v_complete:
                 tv_complete.setTextColor(getResources().getColor(R.color.gray));
@@ -210,6 +233,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 v_accepted.setVisibility(View.INVISIBLE);
                 tv_post.setTextColor(getResources().getColor(R.color.gray_light));
                 v_post.setVisibility(View.INVISIBLE);
+                tv_complete.setBackgroundColor(getResources().getColor(R.color.background));
+                tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
+                tv_post.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.btn_create_job:
                 Intent intent = new Intent(getApplicationContext(), PostCreateActivity.class);

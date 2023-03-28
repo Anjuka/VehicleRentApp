@@ -7,6 +7,32 @@
     tools:context=".SettingsActivity"
     android:background="@color/background">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:textColor="@color/gray"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha=".3"
+        android:scaleType="fitXY"
+        android:src="@drawable/chatbackground_img"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
@@ -34,7 +60,7 @@
         android:layout_height=".5dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/gray"
+        android:background="@color/background_org"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -45,9 +71,10 @@
         android:layout_height="wrap_content"
         android:text="@string/language_settings"
         android:textSize="15sp"
+        android:layout_marginTop="30dp"
         android:textColor="@color/gray"
         app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -61,12 +88,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView17">
 
         <RadioGroup
+            android:id="@+id/rbg_lang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rb_airport"
+                android:id="@+id/rb_english"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,7 +103,7 @@
                 android:textColor="@color/gray" />
 
             <RadioButton
-                android:id="@+id/rb_trip"
+                android:id="@+id/rb_sinhala"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,6 +154,19 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/et_nearest_town"
         app:layout_constraintTop_toBottomOf="@+id/et_nearest_town" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        app:itemIconTint="@color/background_org"
+        app:itemTextColor="@color/background_org"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

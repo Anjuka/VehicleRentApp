@@ -8,6 +8,19 @@
     android:background="@color/background">
 
     <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha=".3"
+        android:scaleType="fitXY"
+        android:src="@drawable/chatbackground_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+    <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +47,7 @@
         android:layout_height=".5dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/gray"
+        android:background="@color/background_org"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -78,11 +91,14 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="15dp"
+        android:layout_margin="15dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16">
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -272,6 +288,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iv_back"
         app:srcCompat="@drawable/ic_baseline_power_settings_new_24" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        app:itemIconTint="@color/background_org"
+        app:itemTextColor="@color/background_org"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

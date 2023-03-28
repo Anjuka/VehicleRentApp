@@ -7,6 +7,19 @@
     tools:context=".ui.host.HostDashoardActivity"
     android:background="@color/background">
 
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha=".6"
+        android:scaleType="fitXY"
+        android:src="@drawable/chatbackground_img"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="80dp"
@@ -20,9 +33,8 @@
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height=".5dp"
-        android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/gray"
+        android:background="@color/background_org"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -31,7 +43,6 @@
         android:id="@+id/btn_create_job"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/btn_back"
         android:text="@string/post_a_new_trip"
@@ -39,8 +50,8 @@
         android:textColor="@color/white"
         android:textSize="15sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout4"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -63,6 +74,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:background="@color/white"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no_data_to_show"
-            android:textColor="@color/gray_light"
+            android:textColor="@color/background_org"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

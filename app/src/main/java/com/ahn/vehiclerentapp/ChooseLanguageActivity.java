@@ -3,6 +3,7 @@ package com.ahn.vehiclerentapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -33,6 +34,11 @@ public class ChooseLanguageActivity extends AppCompatActivity {
                 setLocal("en");
                 recreate();
 
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("LOCALE", "en");
+                editor.commit();
+
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -45,6 +51,11 @@ public class ChooseLanguageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setLocal("si");
                 recreate();
+
+                SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("LOCALE", "si");
+                editor.commit();
 
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
