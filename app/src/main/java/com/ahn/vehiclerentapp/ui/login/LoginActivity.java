@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp.ui;
+package com.ahn.vehiclerentapp.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +17,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ahn.vehiclerentapp.otpVerifications.OTPManageActivity;
 import com.ahn.vehiclerentapp.R;
-import com.ahn.vehiclerentapp.RequestUserPermission;
+import com.ahn.vehiclerentapp.utils.RequestUserPermission;
 import com.ahn.vehiclerentapp.otpVerifications.OTPVerificationLoginActivity;
-import com.ahn.vehiclerentapp.ui.host.ClientRegistrationActivity;
+import com.ahn.vehiclerentapp.ui.registrationSelection.RegistrationActivity;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;

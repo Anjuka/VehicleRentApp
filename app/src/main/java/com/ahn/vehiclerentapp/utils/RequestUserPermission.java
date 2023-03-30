@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.utils;
 
 import android.Manifest;
 import android.app.Activity;

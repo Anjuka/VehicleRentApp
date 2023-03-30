@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp.ui;
+package com.ahn.vehiclerentapp.ui.registrationSelection;
 
 import androidx.appcompat.app.AppCompatActivity;
 

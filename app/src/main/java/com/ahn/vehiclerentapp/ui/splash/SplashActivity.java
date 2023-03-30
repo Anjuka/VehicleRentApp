@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
-import com.ahn.vehiclerentapp.ChooseLanguageActivity;
 import com.ahn.vehiclerentapp.R;
-import com.ahn.vehiclerentapp.ui.LoginActivity;
+import com.ahn.vehiclerentapp.ui.login.LoginActivity;
 import com.ahn.vehiclerentapp.ui.driver.DriverDashoardActivity;
 import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
 import com.google.firebase.auth.FirebaseAuth;

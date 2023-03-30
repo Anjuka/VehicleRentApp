@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.ahn.vehiclerentapp.ui.host.AboutUsActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.ui.host.SettingsActivity;
-import com.ahn.vehiclerentapp.ui.LoginActivity;
+import com.ahn.vehiclerentapp.ui.login.LoginActivity;
 import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
