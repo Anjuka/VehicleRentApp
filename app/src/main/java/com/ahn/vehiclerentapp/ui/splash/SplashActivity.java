@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.ui.languageSelection.ChooseLanguageActivity;
 import com.ahn.vehiclerentapp.ui.login.LoginActivity;
 import com.ahn.vehiclerentapp.ui.driver.DriverDashoardActivity;
 import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
