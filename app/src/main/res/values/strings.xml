@@ -85,4 +85,10 @@
     <string name="langu_warning">This change may effect to application language!</string>
     <string name="proceed">Proceed</string>
     <string name="cancel">Cancel</string>
+    <string name="any">Any</string>
+    <string name="drive_type">Drive Type</string>
+    <string name="lic_warn">Capture your licence image...</string>
+    <string name="plz_vehicle_img">Please upload your vehicle images...</string>
+    <string name="vehicle_number">Vehicle Number</string>
+    <string name="vehicle_images">Vehicle Images</string>
 </resources>

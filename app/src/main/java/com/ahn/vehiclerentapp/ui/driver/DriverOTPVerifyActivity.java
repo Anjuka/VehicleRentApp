@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp.otpVerifications;
+package com.ahn.vehiclerentapp.ui.driver;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +20,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.R;
-import com.ahn.vehiclerentapp.models.user.UserDetails;
 import com.ahn.vehiclerentapp.models.UserType;
-import com.ahn.vehiclerentapp.ui.driver.DriverDashoardActivity;
-import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
+import com.ahn.vehiclerentapp.models.driver.DriverDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +36,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-public class OTPManageActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class DriverOTPVerifyActivity extends AppCompatActivity {
 
     private ConstraintLayout cl_main;
     private EditText et_1;
@@ -54,6 +54,7 @@ public class OTPManageActivity extends AppCompatActivity {
     private String phone_num_receive = "";
     private String reg_type = "";
     private String upload_img_url = "";
+    private String lic_img_url = "";
 
     private ProgressDialog progressDialog;
 
@@ -63,12 +64,12 @@ public class OTPManageActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private StorageReference storageReference;
 
-    UserDetails userDetails;
+    DriverDetails driverDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_otpmanage);
+        setContentView(R.layout.activity_driver_otpverify);
 
         progressDialog = new ProgressDialog(this);
 
@@ -88,8 +89,8 @@ public class OTPManageActivity extends AppCompatActivity {
         otp_receive = getIntent().getExtras().getString("otp");
         phone_num_receive = getIntent().getExtras().getString("phone_num");
         reg_type = getIntent().getExtras().getString("reg_type");
-        userDetails = (UserDetails) getIntent().getSerializableExtra("user_details");
-        Log.d("TAG", "onCreate: userDetails " + userDetails);
+        driverDetails = (DriverDetails) getIntent().getSerializableExtra("driver_details");
+        Log.d("TAG", "onCreate: userDetails " + driverDetails);
 
         /*Random random = new Random();
         otp_sent = random.nextInt(9000) + 1000;*/
@@ -242,20 +243,13 @@ public class OTPManageActivity extends AppCompatActivity {
 
                                                 //save user data
                                                 hideProgress();
-                                                if (reg_type.equals("host")) {
+                                                if (reg_type.equals("driver")) {
 
-                                                    String img_url = userDetails.getImage();
+                                                    String img_url = driverDetails.getDriver_image();
                                                     if (img_url.equals("") || img_url != null) {
                                                         //upload img
-                                                        uploadImage(img_url);
+                                                        uploadImageUser(img_url);
                                                     }
-                                                    else {
-                                                        updateUserData(upload_img_url);
-                                                    }
-                                                } else {
-                                                    Intent intent = new Intent(getApplicationContext(), DriverDashoardActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
                                                 }
 
                                             }
@@ -268,7 +262,7 @@ public class OTPManageActivity extends AppCompatActivity {
 
                                     } else {
                                         hideProgress();
-                                        Toast.makeText(OTPManageActivity.this, R.string.otp_wrong, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(DriverOTPVerifyActivity.this, R.string.otp_wrong, Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -276,12 +270,13 @@ public class OTPManageActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
-    private void uploadImage(String img_url) {
+    private void uploadImageUser(String img_url) {
 
         showProgress("Saving...");
-        StorageReference image = storageReference.child("images/" + userDetails.getPhone_number());
+        StorageReference image = storageReference.child("images/" + driverDetails.getPhone_number());
         image.putFile(Uri.parse(img_url)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -292,7 +287,8 @@ public class OTPManageActivity extends AppCompatActivity {
                         hideProgress();
                         upload_img_url = uri.toString();
                         progressDialog.cancel();
-                        updateUserData(upload_img_url);
+                        driverDetails.setDriver_image(upload_img_url);
+                        uploadLicenceImg();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -311,16 +307,106 @@ public class OTPManageActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUserData(String upload_img_url) {
-        showProgress("Saving...");
-        userDetails.setImage(upload_img_url);
+    private void uploadLicenceImg() {
 
-        DocumentReference documentReference = firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
-        documentReference.set(userDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+        showProgress("Saving...");
+        StorageReference image = storageReference.child("images/" + driverDetails.getPhone_number() + "_lic");
+        image.putFile(Uri.parse(driverDetails.getLicence_image())).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        hideProgress();
+                        lic_img_url = uri.toString();
+                        progressDialog.cancel();
+                        driverDetails.setDriver_image(lic_img_url);
+                        uploadVehicleImg();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                        hideProgress();
+                        progressDialog.cancel();
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("TAG", "onFailure: " + e.getMessage());
+            }
+        });
+    }
+
+    private void uploadVehicleImg() {
+
+        ArrayList<Uri> uri_list = new ArrayList<>();
+        uri_list.add(Uri.parse(driverDetails.getImg_1()));
+        uri_list.add(Uri.parse(driverDetails.getImg_2()));
+        uri_list.add(Uri.parse(driverDetails.getImg_3()));
+        uri_list.add(Uri.parse(driverDetails.getImg_4()));
+
+        showProgress("Uploading...");
+        for (int x =0; x < uri_list.size(); x++){
+            int x_val = x;
+            StorageReference image = storageReference.child("images/" + driverDetails.getPhone_number() + "_" +driverDetails.getVehicle_number() + "_" + x);
+            image.putFile(uri_list.get(x)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    image.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            switch (x_val){
+                                case 0:
+                                    driverDetails.setImg_1(String.valueOf(uri));
+                                    break;
+                                case 1:
+                                    driverDetails.setImg_2(String.valueOf(uri));
+                                    break;
+                                case 2:
+                                    driverDetails.setImg_3(String.valueOf(uri));
+                                    break;
+                                case 3:
+                                    driverDetails.setImg_4(String.valueOf(uri));
+                                    break;
+
+                            }
+
+                            if (x_val == 3){
+                                updateUserDB();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+        }
+    }
+
+    private void updateUserDB() {
+
+        showProgress("Saving...");
+
+        DocumentReference documentReference = firebaseFirestore.collection("drivers").document(firebaseAuth.getCurrentUser().getUid());
+        documentReference.set(driverDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 hideProgress();
-                Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);
+                Intent intent = new Intent(getApplicationContext(), DriverDashoardActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -328,7 +414,7 @@ public class OTPManageActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 hideProgress();
-                Toast.makeText(OTPManageActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverOTPVerifyActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp.models;
+package com.ahn.vehiclerentapp.models.user;
 
 import java.util.ArrayList;
 

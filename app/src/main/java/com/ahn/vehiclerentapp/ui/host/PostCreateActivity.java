@@ -1,8 +1,7 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -24,14 +23,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.ahn.vehiclerentapp.models.CityData;
-import com.ahn.vehiclerentapp.models.CityDataList;
-import com.ahn.vehiclerentapp.ui.host.ClientRegistrationActivity;
-import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
+import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.models.city.CityData;
+import com.ahn.vehiclerentapp.models.city.CityDataList;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -61,7 +58,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout cl_tour;
     private TextView tv_tour_destination;
     private LinearLayout ll_night_list;
-    private ImageView iv_back;
+    private ImageView iv_close;
     private Button btn_submit;
 
     private Spinner sp_night_1;
@@ -128,7 +125,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
         cl_pick = findViewById(R.id.cl_pick);
         cl_tour = findViewById(R.id.cl_tour);
         ll_night_list = findViewById(R.id.ll_night_list);
-        iv_back = findViewById(R.id.iv_back);
+        iv_close = findViewById(R.id.iv_close);
         btn_submit = findViewById(R.id.btn_submit);
 
         sp_night_1 = findViewById(R.id.sp_night_1);
@@ -211,7 +208,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
         ArrayAdapter<String> adapter_air_port = new ArrayAdapter<>(PostCreateActivity.this, android.R.layout.simple_spinner_dropdown_item, air_ports);
         sp_pick.setAdapter(adapter_air_port);
 
-        iv_back.setOnClickListener(new View.OnClickListener() {
+        iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);

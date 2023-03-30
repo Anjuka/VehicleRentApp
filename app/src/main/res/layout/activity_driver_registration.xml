@@ -106,6 +106,7 @@
                         />
 
                     <ImageView
+                        android:id="@+id/iv_lic"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -115,7 +116,7 @@
                 </LinearLayout>
 
                 <EditText
-                    android:id="@+id/editTextEmail"
+                    android:id="@+id/et_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -127,6 +128,7 @@
                     android:paddingHorizontal="8dp"/>
 
 
+<!--
                 <EditText
                     android:id="@+id/et_br"
                     android:layout_width="match_parent"
@@ -138,6 +140,7 @@
                     android:background="@drawable/et_back"
                     android:paddingVertical="16dp"
                     android:paddingHorizontal="8dp"/>
+-->
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,7 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Drive Type"
+                    android:text="@string/drive_type"
                     android:textSize="18dp"
                     android:maxLines="1"/>
 
@@ -196,6 +199,7 @@
                     android:paddingHorizontal="8dp" >
 
                     <RadioGroup
+                        android:id="@+id/rg_tour_type"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
@@ -216,11 +220,19 @@
                         android:buttonTint="@color/colorPrimary"
                         android:text="@string/trip"/>
 
+                        <RadioButton
+                            android:id="@+id/rb_any"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:buttonTint="@color/colorPrimary"
+                            android:text="@string/any"/>
+
                     </RadioGroup>
 
                 </LinearLayout>
 
-                <EditText
+                <!--<EditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -242,7 +254,7 @@
                     android:maxLines="1"
                     android:background="@drawable/et_back"
                     android:paddingVertical="16dp"
-                    android:paddingHorizontal="8dp"/>
+                    android:paddingHorizontal="8dp"/>-->
 
             </LinearLayout>
         </ScrollView>

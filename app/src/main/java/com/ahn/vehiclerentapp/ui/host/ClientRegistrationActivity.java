@@ -27,13 +27,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.ahn.vehiclerentapp.models.CityData;
-import com.ahn.vehiclerentapp.models.CityDataList;
-import com.ahn.vehiclerentapp.models.UserDetails;
-import com.ahn.vehiclerentapp.models.UserPostsDataList;
+import com.ahn.vehiclerentapp.models.city.CityData;
+import com.ahn.vehiclerentapp.models.city.CityDataList;
+import com.ahn.vehiclerentapp.models.user.UserDetails;
+import com.ahn.vehiclerentapp.models.user.UserPostsDataList;
 import com.ahn.vehiclerentapp.otpVerifications.OTPManageActivity;
 import com.ahn.vehiclerentapp.R;
-import com.ahn.vehiclerentapp.ui.driver.DriverRegistrationActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

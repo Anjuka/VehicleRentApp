@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,17 +15,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import com.ahn.vehiclerentapp.models.CityData;
-import com.ahn.vehiclerentapp.models.CityDataList;
-import com.ahn.vehiclerentapp.models.UserDetails;
+import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.models.city.CityData;
+import com.ahn.vehiclerentapp.models.city.CityDataList;
+import com.ahn.vehiclerentapp.models.user.ProfileActivity;
+import com.ahn.vehiclerentapp.models.user.UserDetails;
 import com.ahn.vehiclerentapp.ui.driver.DriverDashoardActivity;
-import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -79,6 +79,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        iv_back.setVisibility(View.INVISIBLE);
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

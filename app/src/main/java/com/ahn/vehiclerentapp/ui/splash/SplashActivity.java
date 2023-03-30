@@ -61,6 +61,7 @@ public class SplashActivity extends AppCompatActivity {
                                     overridePendingTransition(0, 0);
                                 }
                             } else {
+                                users_type = "";
                                 if (users_type.equals("")) {
                                     Intent i = new Intent(getApplicationContext(), ChooseLanguageActivity.class);
                                     startActivity(i);

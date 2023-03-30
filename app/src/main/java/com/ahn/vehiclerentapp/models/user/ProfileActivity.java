@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.models.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -7,14 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ahn.vehiclerentapp.models.UserDetails;
+import com.ahn.vehiclerentapp.ui.host.AboutUsActivity;
+import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.ui.host.SettingsActivity;
 import com.ahn.vehiclerentapp.ui.LoginActivity;
 import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
 import com.bumptech.glide.Glide;

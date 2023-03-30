@@ -21,9 +21,45 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".PostCreateActivity"
+            android:name=".ui.driver.DriverAboutUsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.driver.DriverSettingsActivity"
+            android:exported="false"
+            android:theme="@style/AppNewTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.driver.DriverProfileActivity"
+            android:exported="false"
+            android:theme="@style/AppNewTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.driver.DriverOTPVerifyActivity"
+            android:exported="false"
+            android:theme="@style/AppNewTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.host.PostCreateActivity"
+            android:exported="false"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -32,7 +68,7 @@
         <activity
             android:name=".otpVerifications.OTPVerificationLoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -41,34 +77,34 @@
         <activity
             android:name=".ui.driver.DriverDashoardActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".ui.host.SettingsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".models.user.ProfileActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".ui.host.AboutUsActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -77,7 +113,7 @@
         <activity
             android:name=".ui.host.HostDashoardActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -86,7 +122,7 @@
         <activity
             android:name=".otpVerifications.OTPManageActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -95,16 +131,16 @@
         <activity
             android:name=".ChooseLanguageActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".VehicleRegActivity"
+            android:name=".ui.driver.VehicleRegActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -113,7 +149,7 @@
         <activity
             android:name=".ui.driver.DriverRegistrationActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -122,7 +158,7 @@
         <activity
             android:name=".ui.host.ClientRegistrationActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -131,7 +167,7 @@
         <activity
             android:name=".ui.RegistrationActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -140,7 +176,7 @@
         <activity
             android:name=".ui.LoginActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"
@@ -164,7 +200,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.app.lib_name"

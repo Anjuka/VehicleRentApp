@@ -12,14 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ahn.vehiclerentapp.AboutUsActivity;
-import com.ahn.vehiclerentapp.PostCreateActivity;
-import com.ahn.vehiclerentapp.ProfileActivity;
+import com.ahn.vehiclerentapp.models.user.ProfileActivity;
 import com.ahn.vehiclerentapp.R;
-import com.ahn.vehiclerentapp.SettingsActivity;
-import com.ahn.vehiclerentapp.models.CityData;
-import com.ahn.vehiclerentapp.models.CityDataList;
-import com.ahn.vehiclerentapp.models.UserDetails;
+import com.ahn.vehiclerentapp.models.user.UserDetails;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,11 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener {
 

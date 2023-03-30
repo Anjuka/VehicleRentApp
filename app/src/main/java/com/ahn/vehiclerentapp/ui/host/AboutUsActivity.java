@@ -1,4 +1,4 @@
-package com.ahn.vehiclerentapp;
+package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,8 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.ahn.vehiclerentapp.models.UserDetails;
+import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.models.user.ProfileActivity;
+import com.ahn.vehiclerentapp.models.user.UserDetails;
 import com.ahn.vehiclerentapp.ui.host.HostDashoardActivity;
+import com.ahn.vehiclerentapp.ui.host.SettingsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -30,6 +33,8 @@ public class AboutUsActivity extends AppCompatActivity {
 
         iv_back = findViewById(R.id.iv_back);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+        iv_back.setVisibility(View.INVISIBLE);
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
