@@ -1,11 +1,13 @@
 package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,13 +24,21 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.models.city.CityData;
 import com.ahn.vehiclerentapp.models.city.CityDataList;
+import com.ahn.vehiclerentapp.models.posts.DriverData;
+import com.ahn.vehiclerentapp.models.posts.PostData;
+import com.ahn.vehiclerentapp.models.posts.PostsDataList;
+import com.ahn.vehiclerentapp.models.user.UserDetails;
+import com.ahn.vehiclerentapp.ui.driver.DriverProfileActivity;
+import com.ahn.vehiclerentapp.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -60,6 +70,8 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private LinearLayout ll_night_list;
     private ImageView iv_close;
     private Button btn_submit;
+
+    private String user_id = "";
 
     private Spinner sp_night_1;
     private Spinner sp_night_2;
@@ -93,6 +105,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private ArrayList<String> no_of_passengers = new ArrayList<>();
     private ArrayList<String> vehicle_types = new ArrayList<>();
     private ArrayList<String> air_ports = new ArrayList<>();
+    private ArrayList<PostsDataList> postsDataLists = new ArrayList();
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -103,14 +116,31 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private ArrayList<String> night_destination = new ArrayList<>();
     private String no_passengers = "";
     private String vehicle_type = "";
-    private String start_date= "";
-    private String start_time= "";
+    private String start_date = "";
+    private String start_time = "";
+    private String nearest_town = "";
+
+    private String n1 = "";
+    private String n2 = "";
+    private String n3 = "";
+    private String n4 = "";
+    private String n5 = "";
+    private String n6 = "";
+    private String n7 = "";
+    private String n8 = "";
+    private String n9 = "";
+    private String n10 = "";
+
+    UserDetails user_data;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_create);
+
+        user_data = new UserDetails();
+        user_data = (UserDetails) getIntent().getSerializableExtra("user_data");
 
         sp_trip_type = findViewById(R.id.sp_trip_type);
         sp_tour_nights = findViewById(R.id.sp_tour_nights);
@@ -163,6 +193,8 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        user_id = firebaseAuth.getCurrentUser().getUid();
+
         trip_types.add("Airport Drop");
         trip_types.add("Airport Pick");
         trip_types.add("Tour");
@@ -211,12 +243,60 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
         iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(0, 0);
+
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(PostCreateActivity.this);
+                builder1.setMessage("Are you sure, you want to exit?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);
+                                startActivity(intent);
+                                finish();
+                                //overridePendingTransition(0, 0);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
+
+        progressDialog.setMessage("Loading....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        firebaseFirestore.collection("posts")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        List<PostData> postsDataLists_ = querySnapshot.toObjects(PostData.class);
+                        postsDataLists.clear();
+                        if (postsDataLists_.size() !=0) {
+                            if (postsDataLists_.get(0).getPostsDataLists() != null) {
+                                postsDataLists.addAll(postsDataLists_.get(0).getPostsDataLists());
+                                Log.d("TAG", "onSuccess: ");
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "onFailure: " + e.getLocalizedMessage());
+                        progressDialog.cancel();
+                    }
+                });
 
         progressDialog.setMessage("Loading....");
         progressDialog.setCancelable(false);
@@ -303,6 +383,25 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        sp_pick.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (tour_type.equals("Airport Drop")){
+                    end_location = air_ports.get(i);
+                    start_location = user_data.getAddress();
+                }
+                else if (tour_type.equals("Airport Pick")){
+                    start_location = air_ports.get(i);
+                    end_location = user_data.getAddress();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         sp_tour_nights.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -332,6 +431,10 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+
                         break;
                     case 2:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -355,6 +458,10 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
                         break;
                     case 3:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -378,6 +485,11 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
                         break;
                     case 4:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -401,6 +513,12 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
+                        night_destination.add(n4);
                         break;
                     case 5:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -424,6 +542,13 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
+                        night_destination.add(n4);
+                        night_destination.add(n5);
                         break;
                     case 6:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -447,6 +572,14 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
+                        night_destination.add(n4);
+                        night_destination.add(n5);
+                        night_destination.add(n6);
                         break;
                     case 7:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -470,6 +603,15 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.GONE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
+                        night_destination.add(n4);
+                        night_destination.add(n5);
+                        night_destination.add(n6);
+                        night_destination.add(n7);
                         break;
                     case 8:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -493,6 +635,16 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.VISIBLE);
                         tv_night_9.setVisibility(View.GONE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
+                        night_destination.add(n4);
+                        night_destination.add(n5);
+                        night_destination.add(n6);
+                        night_destination.add(n7);
+                        night_destination.add(n8);
                         break;
                     case 9:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -516,6 +668,16 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         tv_night_8.setVisibility(View.VISIBLE);
                         tv_night_9.setVisibility(View.VISIBLE);
                         tv_night_10.setVisibility(View.GONE);
+
+                        night_destination.clear();
+                        night_destination.add(n1);
+                        night_destination.add(n2);
+                        night_destination.add(n3);
+                        night_destination.add(n4);
+                        night_destination.add(n5);
+                        night_destination.add(n6);
+                        night_destination.add(n7);
+                        night_destination.add(n9);
                         break;
                     case 10:
                         sp_night_1.setVisibility(View.VISIBLE);
@@ -549,10 +711,132 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        sp_night_1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n1 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        sp_night_2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n2 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n3 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n4 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_5.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n5 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n6 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_7.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n7 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_8.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n8 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_9.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n9 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        sp_night_10.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n10 = cities.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
         rb_grp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
-                switch (id){
+                switch (id) {
                     case R.id.rb_same_destination:
                         tv_tour_destination.setVisibility(View.VISIBLE);
                         sp_tour_destination.setVisibility(View.VISIBLE);
@@ -598,6 +882,18 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
         int id = view.getId();
         switch (id) {
             case R.id.btn_submit:
+
+                nearest_town = user_data.getActive_town();
+               // start_location = user_data.getAddress();
+
+                if (!no_nights.isEmpty()) {
+                    setNightPlans(no_nights);
+                }
+
+                if (tour_type.equals("Airport Drop") || tour_type.equals("Airport Pick")){
+                    night_destination = new ArrayList<>();
+                }
+
                 Log.d("TAG", "onClick: " +
                         "tour_typ = " + tour_type + "\n" +
                         " - no_nights = " + no_nights + "\n" +
@@ -606,9 +902,163 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         " - start_date = " + start_date + "\n" +
                         " - start_time = " + start_time + "\n" +
                         " - start_location = " + start_location + "\n" +
-                        " - end_location = " + end_location);
+                        " - end_location = " + end_location + "\n" +
+                        " - nearest_town = " + nearest_town + "\n" +
+                        " - nights = " + night_destination + "\n" +
+                        " - nearest_town = " + night_destination);
+
+                ArrayList<DriverData> driverData = new ArrayList<>();
+
+                progressDialog.setMessage("Posting....");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
+                PostsDataList postsDataList = new PostsDataList(
+                        user_id,
+                        "new",
+                        nearest_town,
+                        tour_type,
+                        no_nights,
+                        no_passengers,
+                        start_date,
+                        start_time,
+                        start_location,
+                        end_location,
+                        night_destination,
+                        "",
+                        driverData,
+                        vehicle_type);
+
+                postsDataLists.add(postsDataList);
+
+                PostData postData = new PostData(postsDataLists);
+
+                DocumentReference documentReference = firebaseFirestore.collection("posts").document("postsList");
+                documentReference.set(postData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        progressDialog.cancel();
+                        Toast.makeText(PostCreateActivity.this, "Posting succeeded....", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.cancel();
+                        Toast.makeText(PostCreateActivity.this, "Posting failed....", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 break;
         }
+    }
+
+    private void setNightPlans(String no_nights) {
+
+        switch ((Integer.parseInt(no_nights))) {
+            case 1:
+                night_destination.clear();
+                night_destination.add(n1);
+
+                break;
+            case 2:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                break;
+
+                case 3:
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                break;
+             case 4:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                break;
+            case 5:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                night_destination.add(n5);
+                break;
+
+            case 6:
+
+                 night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                night_destination.add(n5);
+                night_destination.add(n6);
+                break;
+
+            case 7:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                night_destination.add(n5);
+                night_destination.add(n6);
+                night_destination.add(n7);
+                break;
+
+            case 8:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                night_destination.add(n5);
+                night_destination.add(n6);
+                night_destination.add(n7);
+                night_destination.add(n8);
+                break;
+
+            case 9:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                night_destination.add(n5);
+                night_destination.add(n6);
+                night_destination.add(n7);
+                night_destination.add(n9);
+                break;
+
+            case 10:
+
+                night_destination.clear();
+                night_destination.add(n1);
+                night_destination.add(n2);
+                night_destination.add(n3);
+                night_destination.add(n4);
+                night_destination.add(n5);
+                night_destination.add(n6);
+                night_destination.add(n7);
+                night_destination.add(n9);
+                night_destination.add(n10);
+                break;
+        }
+
     }
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {

@@ -1,8 +1,10 @@
 package com.ahn.vehiclerentapp.ui.driver;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,10 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ahn.vehiclerentapp.models.user.ProfileActivity;
 import com.ahn.vehiclerentapp.ui.host.AboutUsActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.ui.host.SettingsActivity;
 import com.ahn.vehiclerentapp.models.driver.DriverDetails;
+import com.ahn.vehiclerentapp.ui.login.LoginActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -37,6 +41,7 @@ public class DriverProfileActivity extends AppCompatActivity {
     private ImageView iv_v_img2;
     private ImageView iv_v_img3;
     private ImageView iv_v_img4;
+    private ImageView iv_logout;
     private BottomNavigationView bottomNavigationView;
 
     private FirebaseAuth firebaseAuth;
@@ -66,6 +71,7 @@ public class DriverProfileActivity extends AppCompatActivity {
         iv_v_img2 = findViewById(R.id.iv_v_img2);
         iv_v_img3 = findViewById(R.id.iv_v_img3);
         iv_v_img4 = findViewById(R.id.iv_v_img4);
+        iv_logout = findViewById(R.id.iv_logout);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
 
@@ -160,6 +166,39 @@ public class DriverProfileActivity extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        iv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(DriverProfileActivity.this);
+                builder1.setMessage("Are you sure you want to sign out?");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                firebaseAuth.signOut();
+                                Intent intentLogout = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intentLogout);
+                                finish();
+                                overridePendingTransition(0, 0);
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
 

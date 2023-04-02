@@ -91,4 +91,14 @@
     <string name="plz_vehicle_img">Please upload your vehicle images...</string>
     <string name="vehicle_number">Vehicle Number</string>
     <string name="vehicle_images">Vehicle Images</string>
+    <string name="status">Status</string>
+    <string name="triptype">TripType</string>
+    <string name="passengers">Passengers :</string>
+    <string name="nights">Nights :</string>
+    <string name="date_post">Date :</string>
+    <string name="time_post">Time :</string>
+    <string name="applied_bids">Applied Bids :</string>
+    <string name="vehicle_type_post">Vehicle Type :</string>
+    <string name="more_night_information">More Night Information...</string>
+    <string name="more_bids_information">More Bids Information...</string>
 </resources>

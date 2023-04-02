@@ -2,6 +2,7 @@ package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,9 +10,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 
+import com.ahn.vehiclerentapp.adaptes.PostAdapter;
+import com.ahn.vehiclerentapp.models.city.CityData;
+import com.ahn.vehiclerentapp.models.city.CityDataList;
+import com.ahn.vehiclerentapp.models.posts.PostData;
+import com.ahn.vehiclerentapp.models.posts.PostsDataList;
 import com.ahn.vehiclerentapp.models.user.ProfileActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.models.user.UserDetails;
@@ -23,6 +31,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -38,10 +50,21 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
     private View v_accepted;
     private TextView tv_complete;
     private View v_complete;
+    private TextView tv_not_data;
     private Button btn_create_job;
+    private GridView rv_new_post;
+    private GridView rv_accepted_post;
+    private GridView rv_complete_post;
 
     private String userID = "";
     private UserDetails userDetails;
+
+    private ArrayList<PostsDataList> postsDataListsMain = new ArrayList<>();
+    private ArrayList<PostsDataList> postsDataListsNew = new ArrayList<>();
+    private ArrayList<PostsDataList> postsDataListsAccepted = new ArrayList<>();
+    private ArrayList<PostsDataList> postsDataListsCompleted = new ArrayList<>();
+
+    private PostAdapter postAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +88,10 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         tv_complete = findViewById(R.id.tv_complete);
         v_complete = findViewById(R.id.v_complete);
         btn_create_job = findViewById(R.id.btn_create_job);
+        tv_not_data = findViewById(R.id.tv_not_data);
+        rv_new_post = findViewById(R.id.rv_new_post);
+        rv_accepted_post = findViewById(R.id.rv_accepted_post);
+        rv_complete_post = findViewById(R.id.rv_complete_post);
 
         tv_post.setOnClickListener(this);
         v_post.setOnClickListener(this);
@@ -124,6 +151,51 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
             }
         });*/
 
+        showProgress("Loading...");
+        firebaseFirestore.collection("posts")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        List<PostData> postsDataLists = querySnapshot.toObjects(PostData.class);
+                        postsDataListsMain.clear();
+                        if (postsDataLists.size() !=0) {
+                            if (postsDataLists.get(0).getPostsDataLists() != null) {
+                                postsDataListsMain.addAll(postsDataLists.get(0).getPostsDataLists());
+                                Log.d("TAG", "onSuccess: ");
+
+                                for (PostsDataList postsDataList : postsDataListsMain) {
+                                    if (postsDataList.getCreated_user_id().equals(userID)) {
+                                        switch (postsDataList.isStatus()) {
+                                            case "new":
+                                                postsDataListsNew.add(postsDataList);
+                                                break;
+                                            case "accepted":
+                                                postsDataListsAccepted.add(postsDataList);
+                                                break;
+                                            case "completed":
+                                                postsDataListsCompleted.add(postsDataList);
+                                                break;
+                                        }
+
+                                    }
+                                }
+                                rv_new_post.setVisibility(View.VISIBLE);
+                                tv_not_data.setVisibility(View.INVISIBLE);
+                                showNewData();
+                                Log.d("TAG", "onSuccess: ");
+                                hideProgress();
+                            }
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "onFailure: " + e.getLocalizedMessage());
+                        hideProgress();
+                    }
+                });
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -171,6 +243,9 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_post.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
+
+                showNewData();
+
                 break;
             case R.id.v_post:
                 tv_post.setTextColor(getResources().getColor(R.color.gray));
@@ -182,6 +257,8 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_post.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
+                
+                showNewData();
                 break;
             case R.id.tv_accepted:
                 tv_accepted.setTextColor(getResources().getColor(R.color.gray));
@@ -229,13 +306,23 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.btn_create_job:
                 Intent intent = new Intent(getApplicationContext(), PostCreateActivity.class);
+                intent.putExtra("user_data", userDetails);
                 startActivity(intent);
                 break;
         }
     }
 
+    private void showNewData() {
+
+        Log.d("TAG", "showNewData: postsDataListsNew " + postsDataListsNew);
+        postAdapter = new PostAdapter(HostDashoardActivity.this, postsDataListsNew);
+        rv_new_post.setAdapter(postAdapter);
+        
+    }
+
     private void showProgress(String msg) {
         progressDialog.setMessage(msg);
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 

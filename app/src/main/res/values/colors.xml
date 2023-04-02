@@ -22,4 +22,10 @@
     <color name="fif_yellow">#77FFC107</color>
     <color name="bott">#EFCBA2</color>
     <color name="back_chat">#F4DBBA</color>
+
+    <!--Status Colors-->
+    <color name="status_new">#248DF8</color>
+    <color name="status_accept">#8BC34A</color>
+    <color name="status_complete">#FF9800</color>
+
 </resources>
