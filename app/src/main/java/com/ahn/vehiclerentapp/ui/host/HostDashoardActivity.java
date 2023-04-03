@@ -1,11 +1,18 @@
 package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,8 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.BidsDetailsActivity;
+import com.ahn.vehiclerentapp.adaptes.AcceptedPostAdapter;
 import com.ahn.vehiclerentapp.adaptes.PostAdapter;
 import com.ahn.vehiclerentapp.models.city.CityData;
 import com.ahn.vehiclerentapp.models.city.CityDataList;
@@ -24,6 +33,7 @@ import com.ahn.vehiclerentapp.models.posts.PostsDataList;
 import com.ahn.vehiclerentapp.models.user.ProfileActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.models.user.UserDetails;
+import com.ahn.vehiclerentapp.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,8 +47,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener, PostAdapter.ItemClickListener{
+public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener, PostAdapter.ItemClickListener, AcceptedPostAdapter.ItemClickListenerAccList{
 
+    private int REQUEST_PHONE_CALL = 10001;
     private BottomNavigationView bottomNavigationView;
     private ProgressDialog progressDialog;
 
@@ -59,6 +70,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
 
     private String userID = "";
     private UserDetails userDetails;
+    String mobi = "";
 
     private ArrayList<PostsDataList> postsDataListsMain = new ArrayList<>();
     private ArrayList<PostsDataList> postsDataListsNew = new ArrayList<>();
@@ -66,6 +78,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
     private ArrayList<PostsDataList> postsDataListsCompleted = new ArrayList<>();
 
     private PostAdapter postAdapter;
+    private AcceptedPostAdapter acceptedPostAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +114,6 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         tv_complete.setOnClickListener(this);
         v_complete.setOnClickListener(this);
         btn_create_job.setOnClickListener(this);
-
 
         showProgress("Loading...");
         DocumentReference documentReferenceUser = firebaseFirestore.collection("users").document(userID);
@@ -249,6 +261,10 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
 
+                rv_new_post.setVisibility(View.VISIBLE);
+                rv_accepted_post.setVisibility(View.INVISIBLE);
+                rv_complete_post.setVisibility(View.INVISIBLE);
+
                 showNewData();
 
                 break;
@@ -262,6 +278,10 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_post.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
+
+                rv_new_post.setVisibility(View.VISIBLE);
+                rv_accepted_post.setVisibility(View.INVISIBLE);
+                rv_complete_post.setVisibility(View.INVISIBLE);
                 
                 showNewData();
                 break;
@@ -275,6 +295,12 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_post.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
+
+                rv_accepted_post.setVisibility(View.VISIBLE);
+                rv_new_post.setVisibility(View.INVISIBLE);
+                rv_complete_post.setVisibility(View.INVISIBLE);
+                
+                showAcceptedData();
                 break;
             case R.id.v_accepted:
                 tv_accepted.setTextColor(getResources().getColor(R.color.gray));
@@ -286,6 +312,12 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_post.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.white));
+
+                rv_accepted_post.setVisibility(View.VISIBLE);
+                rv_new_post.setVisibility(View.INVISIBLE);
+                rv_complete_post.setVisibility(View.INVISIBLE);
+
+                showAcceptedData();
                 break;
             case R.id.tv_complete:
                 tv_complete.setTextColor(getResources().getColor(R.color.gray));
@@ -297,6 +329,10 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_post.setBackgroundColor(getResources().getColor(R.color.white));
+
+                rv_complete_post.setVisibility(View.VISIBLE);
+                rv_accepted_post.setVisibility(View.INVISIBLE);
+                rv_new_post.setVisibility(View.INVISIBLE);
                 break;
             case R.id.v_complete:
                 tv_complete.setTextColor(getResources().getColor(R.color.gray));
@@ -308,6 +344,10 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 tv_complete.setBackgroundColor(getResources().getColor(R.color.background));
                 tv_accepted.setBackgroundColor(getResources().getColor(R.color.white));
                 tv_post.setBackgroundColor(getResources().getColor(R.color.white));
+
+                rv_complete_post.setVisibility(View.VISIBLE);
+                rv_accepted_post.setVisibility(View.INVISIBLE);
+                rv_new_post.setVisibility(View.INVISIBLE);
                 break;
             case R.id.btn_create_job:
                 Intent intent = new Intent(getApplicationContext(), PostCreateActivity.class);
@@ -315,6 +355,11 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void showAcceptedData() {
+        acceptedPostAdapter = new AcceptedPostAdapter(HostDashoardActivity.this, postsDataListsAccepted, HostDashoardActivity.this::onItemClickAccept);
+        rv_accepted_post.setAdapter(acceptedPostAdapter);
     }
 
     private void showNewData() {
@@ -342,4 +387,66 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra("post_data", postsDataLists);
         startActivity(intent);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PHONE_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission is granted, make a phone call
+                /*phone = phone.substring(0, 2);
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + phone));
+                startActivity(intent);*/
+            } else {
+                // Permission is denied, show a message to the user
+                Toast.makeText(this, "Phone call permission is required to make a phone call.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onItemClickAccept(int position, PostsDataList postsDataLists, String phone) {
+
+        this.mobi = phone;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            // Permission is already granted, make a phone call
+
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(HostDashoardActivity.this);
+            builder1.setMessage(R.string.chaeges_msg);
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Confirm",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            mobi = mobi.replace("+94", "");
+                            Intent intent = new Intent(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:" + mobi));
+                            startActivity(intent);
+                        }
+                    }).setNegativeButton(
+                    "Cancel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        } else {
+            // Permission is not granted, request for the permission
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+        }
+
+        if(ActivityCompat.shouldShowRequestPermissionRationale(HostDashoardActivity.this,Manifest.permission.CALL_PHONE)){
+        }
+        else {
+            ActivityCompat.requestPermissions(HostDashoardActivity.this, new String[]{Manifest.permission.CALL_PHONE},100);
+        }
+    }
+
 }
