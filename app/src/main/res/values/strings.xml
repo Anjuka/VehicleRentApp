@@ -101,4 +101,6 @@
     <string name="vehicle_type_post">Vehicle Type :</string>
     <string name="more_night_information">More Night Information...</string>
     <string name="more_bids_information">More Bids Information...</string>
+    <string name="bid">Bid :</string>
+    <string name="rupee">Rs. </string>
 </resources>

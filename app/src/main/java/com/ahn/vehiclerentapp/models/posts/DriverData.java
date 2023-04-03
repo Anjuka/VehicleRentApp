@@ -10,11 +10,12 @@ public class DriverData {
     private String driver_image;
     private String licence_image;
     private String bit;
+    private String driver_id;
 
     public DriverData() {
     }
 
-    public DriverData(String name, String phone_number, String nearest_town, String active_town, String address, String driver_image, String licence_image, String bit) {
+    public DriverData(String name, String phone_number, String nearest_town, String active_town, String address, String driver_image, String licence_image, String bit, String driver_id) {
         this.name = name;
         this.phone_number = phone_number;
         this.nearest_town = nearest_town;
@@ -23,6 +24,7 @@ public class DriverData {
         this.driver_image = driver_image;
         this.licence_image = licence_image;
         this.bit = bit;
+        this.driver_id = driver_id;
     }
 
     public String getName() {
@@ -87,5 +89,13 @@ public class DriverData {
 
     public void setBit(String bit) {
         this.bit = bit;
+    }
+
+    public String getDriver_id() {
+        return driver_id;
+    }
+
+    public void setDriver_id(String driver_id) {
+        this.driver_id = driver_id;
     }
 }

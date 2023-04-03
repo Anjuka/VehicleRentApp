@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 public class PostCreateActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -913,6 +914,8 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                 progressDialog.setCancelable(false);
                 progressDialog.show();
 
+                String uuid= UUID.randomUUID().toString() + String.valueOf(System.currentTimeMillis());
+
                 PostsDataList postsDataList = new PostsDataList(
                         user_id,
                         "new",
@@ -927,14 +930,20 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         night_destination,
                         "",
                         driverData,
-                        vehicle_type);
+                        vehicle_type,
+                        uuid
+                );
 
+              ArrayList<PostsDataList> p = new ArrayList<>();
+                p.add(postsDataList);
                 postsDataLists.add(postsDataList);
 
-                PostData postData = new PostData(postsDataLists);
+                PostData postData = new PostData(p);
 
-                DocumentReference documentReference = firebaseFirestore.collection("posts").document("postsList");
-                documentReference.set(postData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                DocumentReference documentReference = firebaseFirestore.
+                        collection("posts").
+                        document(uuid);
+                documentReference.set(postsDataList).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         progressDialog.cancel();

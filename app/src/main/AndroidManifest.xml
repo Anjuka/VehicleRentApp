@@ -129,7 +129,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.splash.ChooseLanguageActivity"
+            android:name=".ui.languageSelection.ChooseLanguageActivity"
             android:exported="false"
             android:theme="@style/AppNewTheme"
             android:windowSoftInputMode="adjustPan|stateHidden">

@@ -20,11 +20,12 @@ public class PostsDataList {
     private String approved_bid;
     private ArrayList<DriverData> driverData;
     private String vehicle_type;
+    private String position;
 
     public PostsDataList() {
     }
 
-    public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type) {
+    public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type, String position) {
         this.created_user_id = created_user_id;
         this.status = status;
         this.nearest_town = nearest_town;
@@ -39,6 +40,7 @@ public class PostsDataList {
         this.approved_bid = approved_bid;
         this.driverData = driverData;
         this.vehicle_type = vehicle_type;
+        this.position = position;
     }
 
     public String getCreated_user_id() {
@@ -151,5 +153,13 @@ public class PostsDataList {
 
     public void setVehicle_type(String vehicle_type) {
         this.vehicle_type = vehicle_type;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

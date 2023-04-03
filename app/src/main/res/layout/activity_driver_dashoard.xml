@@ -4,8 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cl_main"
     tools:context=".ui.driver.DriverDashoardActivity"
     android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha=".6"
+        android:scaleType="fitXY"
+        android:src="@drawable/chatbackground_img"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
 
     <ImageView
         android:id="@+id/imageView2"
@@ -22,7 +36,7 @@
         android:layout_height=".5dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/gray"
+        android:background="@color/background_org"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -34,6 +48,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +130,57 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_complete"
             app:layout_constraintStart_toStartOf="@+id/tv_complete"
             app:layout_constraintTop_toBottomOf="@+id/tv_complete" />
+
+
+        <TextView
+            android:id="@+id/tv_not_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data_to_show"
+            android:textColor="@color/background_org"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_accepted" />
+
+        <GridView
+            android:id="@+id/rv_new_post"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            android:visibility="invisible"
+            android:verticalSpacing="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_accepted" />
+
+        <GridView
+            android:id="@+id/rv_accepted_post"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_accepted" />
+
+        <GridView
+            android:id="@+id/rv_complete_post"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="15dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/v_accepted" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

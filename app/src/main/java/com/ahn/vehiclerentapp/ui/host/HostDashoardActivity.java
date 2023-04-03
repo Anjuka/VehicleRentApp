@@ -157,12 +157,14 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot querySnapshot) {
-                        List<PostData> postsDataLists = querySnapshot.toObjects(PostData.class);
+                        List<PostsDataList> postsDataLists = querySnapshot.toObjects(PostsDataList.class);
                         postsDataListsMain.clear();
                         if (postsDataLists.size() !=0) {
-                            if (postsDataLists.get(0).getPostsDataLists() != null) {
+                           /* if (postsDataLists.get(0).getPostsDataLists() != null) {
                                 postsDataListsMain.addAll(postsDataLists.get(0).getPostsDataLists());
-                                Log.d("TAG", "onSuccess: ");
+                                Log.d("TAG", "onSuccess: ");*/
+
+                            postsDataListsMain.addAll(postsDataLists);
 
                                 for (PostsDataList postsDataList : postsDataListsMain) {
                                     if (postsDataList.getCreated_user_id().equals(userID)) {
@@ -178,7 +180,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                                                 break;
                                         }
 
-                                    }
+                                  //  }
                                 }
                                 rv_new_post.setVisibility(View.VISIBLE);
                                 tv_not_data.setVisibility(View.INVISIBLE);
@@ -195,6 +197,8 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                         hideProgress();
                     }
                 });
+
+
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
