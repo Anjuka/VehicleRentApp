@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.ahn.vehiclerentapp.BidsDetailsActivity;
 import com.ahn.vehiclerentapp.adaptes.PostAdapter;
 import com.ahn.vehiclerentapp.models.city.CityData;
 import com.ahn.vehiclerentapp.models.city.CityDataList;
@@ -36,7 +37,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener {
+public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener, PostAdapter.ItemClickListener{
 
     private BottomNavigationView bottomNavigationView;
     private ProgressDialog progressDialog;
@@ -319,7 +320,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
     private void showNewData() {
 
         Log.d("TAG", "showNewData: postsDataListsNew " + postsDataListsNew);
-        postAdapter = new PostAdapter(HostDashoardActivity.this, postsDataListsNew);
+        postAdapter = new PostAdapter(HostDashoardActivity.this, postsDataListsNew, HostDashoardActivity.this::onItemClick);
         rv_new_post.setAdapter(postAdapter);
         
     }
@@ -332,5 +333,13 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
 
     private void hideProgress() {
         progressDialog.cancel();
+    }
+
+    @Override
+    public void onItemClick(int position, PostsDataList postsDataLists) {
+        Log.d("TAG", "onItemClick: ");
+        Intent intent = new Intent(HostDashoardActivity.this, BidsDetailsActivity.class);
+        intent.putExtra("post_data", postsDataLists);
+        startActivity(intent);
     }
 }

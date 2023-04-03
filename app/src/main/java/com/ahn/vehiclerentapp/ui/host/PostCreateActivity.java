@@ -931,7 +931,8 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         "",
                         driverData,
                         vehicle_type,
-                        uuid
+                        uuid,
+                        ""
                 );
 
               ArrayList<PostsDataList> p = new ArrayList<>();

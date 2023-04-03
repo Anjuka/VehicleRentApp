@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.models.posts.DriverData;
 import com.ahn.vehiclerentapp.models.posts.PostsDataList;
 
 import java.util.ArrayList;
@@ -17,10 +18,12 @@ public class PostAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<PostsDataList> postsDataLists;
+    ItemClickListener itemClickListener;
 
-    public PostAdapter(Context context, ArrayList<PostsDataList> postsDataLists) {
+    public PostAdapter(Context context, ArrayList<PostsDataList> postsDataLists, ItemClickListener itemClickListener) {
         this.context = context;
         this.postsDataLists = postsDataLists;
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
@@ -89,6 +92,17 @@ public class PostAdapter extends BaseAdapter {
         }
 
 
+        tv_more_bids.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickListener.onItemClick(position, postsDataLists.get(position));
+            }
+        });
+
         return contentView;
+    }
+
+    public interface ItemClickListener{
+        void onItemClick(int position, PostsDataList postsDataLists);
     }
 }

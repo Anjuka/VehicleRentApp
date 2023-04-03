@@ -1,6 +1,8 @@
 package com.ahn.vehiclerentapp.models.posts;
 
-public class DriverData {
+import java.io.Serializable;
+
+public class DriverData implements Serializable {
 
     private String name;
     private String phone_number;

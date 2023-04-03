@@ -2,9 +2,10 @@ package com.ahn.vehiclerentapp.models.posts;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PostsDataList {
+public class PostsDataList implements Serializable {
 
     private String created_user_id;
     private String status;
@@ -21,11 +22,12 @@ public class PostsDataList {
     private ArrayList<DriverData> driverData;
     private String vehicle_type;
     private String position;
+    private String approved_driver;
 
     public PostsDataList() {
     }
 
-    public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type, String position) {
+   /* public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type, String position) {
         this.created_user_id = created_user_id;
         this.status = status;
         this.nearest_town = nearest_town;
@@ -41,6 +43,25 @@ public class PostsDataList {
         this.driverData = driverData;
         this.vehicle_type = vehicle_type;
         this.position = position;
+    }*/
+
+    public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type, String position, String approved_driver) {
+        this.created_user_id = created_user_id;
+        this.status = status;
+        this.nearest_town = nearest_town;
+        this.tour_type = tour_type;
+        this.no_nights = no_nights;
+        this.no_passengers = no_passengers;
+        this.start_date = start_date;
+        this.start_time = start_time;
+        this.start_location = start_location;
+        this.end_location = end_location;
+        this.night_destination = night_destination;
+        this.approved_bid = approved_bid;
+        this.driverData = driverData;
+        this.vehicle_type = vehicle_type;
+        this.position = position;
+        this.approved_driver = approved_driver;
     }
 
     public String getCreated_user_id() {
@@ -161,5 +182,13 @@ public class PostsDataList {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getApproved_driver() {
+        return approved_driver;
+    }
+
+    public void setApproved_driver(String approved_driver) {
+        this.approved_driver = approved_driver;
     }
 }

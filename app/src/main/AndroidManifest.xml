@@ -21,6 +21,15 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".BidsDetailsActivity"
+            android:exported="false"
+            android:theme="@style/AppNewTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.driver.DriverAboutUsActivity"
             android:exported="false"
             android:theme="@style/AppNewTheme"

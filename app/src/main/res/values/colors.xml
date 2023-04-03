@@ -28,4 +28,6 @@
     <color name="status_accept">#8BC34A</color>
     <color name="status_complete">#FF9800</color>
 
+    <color name="red">#732525</color>
+
 </resources>

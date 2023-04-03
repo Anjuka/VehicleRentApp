@@ -103,4 +103,9 @@
     <string name="more_bids_information">More Bids Information...</string>
     <string name="bid">Bid :</string>
     <string name="rupee">Rs. </string>
+    <string name="bids">Bids</string>
+    <string name="driver_name">Driver Name : </string>
+    <string name="accept">Accept</string>
+    <string name="start_location">Start Location :</string>
+    <string name="end_location">End Location :</string>
 </resources>
