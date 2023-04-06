@@ -105,9 +105,11 @@
     <string name="rupee">Rs. </string>
     <string name="bids">Bids</string>
     <string name="driver_name">Driver Name : </string>
+    <string name="client_name">Client Name : </string>
     <string name="accept">Accept</string>
     <string name="start_location">Start Location :</string>
     <string name="end_location">End Location :</string>
     <string name="call_driver">Call Driver</string>
     <string name="chaeges_msg">This action will complete with your service provider,  then this call will charge standard charges.</string>
+    <string name="call_client">Call Client</string>
 </resources>

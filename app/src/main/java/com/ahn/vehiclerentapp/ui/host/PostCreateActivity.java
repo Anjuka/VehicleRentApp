@@ -932,7 +932,9 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         driverData,
                         vehicle_type,
                         uuid,
-                        ""
+                        "",
+                        user_data.getPhone_number(),
+                        user_data.getPhone_number()
                 );
 
               ArrayList<PostsDataList> p = new ArrayList<>();
