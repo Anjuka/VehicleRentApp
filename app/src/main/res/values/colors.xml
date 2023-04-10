@@ -17,6 +17,7 @@
 
     <color name="background">#FDF6EE</color>
     <color name="background_org">#EC8D72</color>
+    <color name="background_org_shade">#CBEC8D72</color>
     <color name="background_pink">#E4D0D0</color>
     <color name="fiftyy_white">#32FFFFFF</color>
     <color name="fif_yellow">#77FFC107</color>

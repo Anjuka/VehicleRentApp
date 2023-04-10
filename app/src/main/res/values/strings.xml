@@ -113,4 +113,8 @@
     <string name="chaeges_msg">This action will complete with your service provider,  then this call will charge standard charges.</string>
     <string name="call_client">Call Client</string>
     <string name="code_is_sent_to">Code is sent to </string>
+    <string name="front_view">Front View</string>
+    <string name="back_view">Back View</string>
+    <string name="side_view">Side View</string>
+    <string name="indoor_view">Indoor View</string>
 </resources>
