@@ -71,6 +71,7 @@ public class DriverRegistrationActivity extends AppCompatActivity {
     private EditText et_phone_number;
     private EditText et_address;
     private RadioGroup rg_tour_type;
+    private ConstraintLayout cl_main;
 
     private String name = "";
     private String nic = "";
@@ -117,12 +118,20 @@ public class DriverRegistrationActivity extends AppCompatActivity {
         rg_tour_type  = findViewById(R.id.rg_tour_type);
         et_address  = findViewById(R.id.et_address);
         et_phone_number  = findViewById(R.id.et_phone_number);
+        cl_main  = findViewById(R.id.cl_main);
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.
                 PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest
                     .permission.WRITE_EXTERNAL_STORAGE}, 0);
         }
+
+        cl_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(cl_main);
+            }
+        });
 
         progressDialog.setMessage("Loading....");
         progressDialog.setCancelable(false);
