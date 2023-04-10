@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".otpVerifications.OTPManageActivity"
+    tools:context=".ui.otpVerifications.OTPManageActivity"
     android:id="@+id/cl_main"
     android:background="@color/background">
 
@@ -41,11 +41,11 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/tv_code_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Code is sent to 0715170929"
+        android:text="@string/code_is_sent_to"
         android:textColor="@color/gray"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

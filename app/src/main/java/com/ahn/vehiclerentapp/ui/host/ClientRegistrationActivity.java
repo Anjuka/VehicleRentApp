@@ -31,7 +31,7 @@ import com.ahn.vehiclerentapp.models.city.CityData;
 import com.ahn.vehiclerentapp.models.city.CityDataList;
 import com.ahn.vehiclerentapp.models.user.UserDetails;
 import com.ahn.vehiclerentapp.models.user.UserPostsDataList;
-import com.ahn.vehiclerentapp.otpVerifications.OTPManageActivity;
+import com.ahn.vehiclerentapp.ui.otpVerifications.OTPManageActivity;
 import com.ahn.vehiclerentapp.R;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;

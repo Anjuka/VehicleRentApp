@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.utils.RequestUserPermission;
-import com.ahn.vehiclerentapp.otpVerifications.OTPVerificationLoginActivity;
+import com.ahn.vehiclerentapp.ui.otpVerifications.OTPVerificationLoginActivity;
 import com.ahn.vehiclerentapp.ui.registrationSelection.RegistrationActivity;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;

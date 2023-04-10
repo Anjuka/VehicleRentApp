@@ -112,4 +112,5 @@
     <string name="call_driver">Call Driver</string>
     <string name="chaeges_msg">This action will complete with your service provider,  then this call will charge standard charges.</string>
     <string name="call_client">Call Client</string>
+    <string name="code_is_sent_to">Code is sent to </string>
 </resources>
