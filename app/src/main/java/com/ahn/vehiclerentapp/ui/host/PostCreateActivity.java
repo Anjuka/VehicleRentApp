@@ -1,6 +1,7 @@
 package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,20 +28,38 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.R;
+import com.ahn.vehiclerentapp.constant.Constants;
 import com.ahn.vehiclerentapp.models.city.CityData;
 import com.ahn.vehiclerentapp.models.city.CityDataList;
+import com.ahn.vehiclerentapp.models.driver.DriverDetails;
 import com.ahn.vehiclerentapp.models.posts.DriverData;
 import com.ahn.vehiclerentapp.models.posts.PostData;
 import com.ahn.vehiclerentapp.models.posts.PostsDataList;
 import com.ahn.vehiclerentapp.models.user.UserDetails;
+import com.ahn.vehiclerentapp.network.ApiClient;
+import com.ahn.vehiclerentapp.network.ApiService;
 import com.ahn.vehiclerentapp.ui.driver.DriverProfileActivity;
 import com.ahn.vehiclerentapp.ui.login.LoginActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +67,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PostCreateActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -108,7 +131,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private ArrayList<String> air_ports = new ArrayList<>();
     private ArrayList<PostsDataList> postsDataLists = new ArrayList();
 
-    final Calendar myCalendar = Calendar.getInstance();
+    Calendar myCalendar = Calendar.getInstance();
 
     private String tour_type = "";
     private String start_location = "";
@@ -119,6 +142,8 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private String vehicle_type = "";
     private String start_date = "";
     private String start_time = "";
+    private String start_timestamp = "";
+    private String end_timestamp = "";
     private String nearest_town = "";
 
     private String n1 = "";
@@ -133,7 +158,9 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
     private String n10 = "";
 
     UserDetails user_data;
+    ArrayList<DriverDetails> driversList = new ArrayList<>();
 
+    private int tour_notify_time = 3600000; //1H
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +169,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
 
         user_data = new UserDetails();
         user_data = (UserDetails) getIntent().getSerializableExtra("user_data");
+        //driverDetails = new DriverDetails();
 
         sp_trip_type = findViewById(R.id.sp_trip_type);
         sp_tour_nights = findViewById(R.id.sp_tour_nights);
@@ -340,6 +368,31 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         progressDialog.cancel();
                     }
                 });
+
+        progressDialog.setMessage("Loading....");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        firebaseFirestore.collection("drivers")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<DriverDetails> driverData = null;
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        driverData = task.getResult().toObjects(DriverDetails.class);
+                        Log.d("TAG", document.getId() + " => " + document.getData());
+                    }
+                    if (driverData != null) {
+                        driversList.addAll(driverData);
+                    }
+
+                } else {
+                    Log.d("TAG", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
 
         et_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -895,6 +948,11 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                     night_destination = new ArrayList<>();
                 }
 
+
+                Long timestamp = myCalendar.getTimeInMillis();
+                Log.d("TAG", "onClick: ");
+                start_timestamp = String.valueOf(timestamp);
+
                 Log.d("TAG", "onClick: " +
                         "tour_typ = " + tour_type + "\n" +
                         " - no_nights = " + no_nights + "\n" +
@@ -934,7 +992,10 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         uuid,
                         "",
                         user_data.getPhone_number(),
-                        user_data.getPhone_number()
+                        user_data.getPhone_number(),
+                        start_timestamp,
+                        end_timestamp,
+                        user_data.getFcm_token()
                 );
 
               ArrayList<PostsDataList> p = new ArrayList<>();
@@ -951,6 +1012,45 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                     public void onSuccess(Void unused) {
                         progressDialog.cancel();
                         Toast.makeText(PostCreateActivity.this, "Posting succeeded....", Toast.LENGTH_SHORT).show();
+
+
+                        //notification & send validation
+                        JSONArray tokens = new JSONArray();
+                        for (DriverDetails driverDetails : driversList){
+                            if (!driverDetails.getFcm_token().isEmpty()) {
+                                if (driverDetails.getVehicle_type().equals(postsDataList.getVehicle_type()) && driverDetails.getActive_town().equals(postsDataList.getNearest_town())){
+                                    if (driverDetails.getAllocated_time().size() != 0) {
+                                        for (String allow_time : driverDetails.getAllocated_time()) {
+                                            long val = Math.abs((Long.parseLong(allow_time) - Long.parseLong(postsDataList.getStart_timestamp())));
+                                            if ((val >= tour_notify_time)) {
+                                                tokens.put(driverDetails.getFcm_token());
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        tokens.put(driverDetails.getFcm_token());
+                                    }
+                                }
+                            }
+                        }
+
+                        JSONObject data = new JSONObject();
+                        try {
+                            data.put("user_id", user_id);
+                            data.put("name", user_data.getName());
+                            data.put("post", postsDataList);
+                            data.put(Constants.FCM_TOKEN, user_data.getFcm_token());
+                            data.put(Constants.KEY_MESSAGE, "new_post");
+
+                            JSONObject body = new JSONObject();
+                            body.put(Constants.REMOTE_MSG_DATA, data);
+                            body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                            sendNotification(body.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                         Intent intent = new Intent(getApplicationContext(), HostDashoardActivity.class);
                         startActivity(intent);
@@ -1080,7 +1180,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
             myCalendar.set(Calendar.MONTH, month);
             myCalendar.set(Calendar.DAY_OF_MONTH, day);
 
-            String myFormat = "MM/dd/yy";
+            String myFormat = "dd/MM/yy";
             SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
             et_date.setText(dateFormat.format(myCalendar.getTime()));
             start_date = dateFormat.format(myCalendar.getTime());
@@ -1097,8 +1197,52 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 et_time.setText(selectedHour + ":" + selectedMinute);
                 start_time = selectedHour + ":" + selectedMinute;
+
+                myCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                myCalendar.set(Calendar.MINUTE, selectedMinute);
+                myCalendar.set(Calendar.SECOND, 0);
+
             }
         }, hour, minute, false);
         timePickerDialog.show();
+    }
+
+    private void  sendNotification(String massageBody){
+        ApiClient.getClient().create(ApiService.class).sendMassage(
+                Constants.getRemoteMsgHeaders(),
+                massageBody
+        ).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()){
+                    try {
+                        if (response.body() != null){
+                            JSONObject responseJson = new JSONObject(response.body());
+                            JSONArray result = responseJson.getJSONArray("results");
+                            if (responseJson.getInt("failure") == 1){
+                                JSONObject error = (JSONObject) result.get(0);
+                                showToast(error.getString("error"));
+                            }
+                        }
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                    //  showToast("Notification sent successfully");
+                }
+                else {
+                    showToast("Error: " + response.code());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                showToast(t.getMessage());
+            }
+        });
+    }
+
+    private void showToast(String massage){
+        Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT).show();
     }
 }

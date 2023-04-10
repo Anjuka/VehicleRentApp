@@ -261,12 +261,12 @@ public class ClientRegistrationActivity extends AppCompatActivity {
 
                     if (mImageUri == null){
                         userDetails = new UserDetails(full_name, NIC, host_name,
-                                mobile_number, br_number, nearest_town, address, email, "", userPostsDataLists);
+                                mobile_number, br_number, nearest_town, address, email, "", userPostsDataLists, "");
                     }
                     else {
 
                         userDetails = new UserDetails(full_name, NIC, host_name,
-                                mobile_number, br_number, nearest_town, address, email, mImageUri.toString(), userPostsDataLists);
+                                mobile_number, br_number, nearest_town, address, email, mImageUri.toString(), userPostsDataLists, "");
                     }
 
                     registerWithPhone();

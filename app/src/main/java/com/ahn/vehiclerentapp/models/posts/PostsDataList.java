@@ -25,6 +25,9 @@ public class PostsDataList implements Serializable {
     private String approved_driver;
     private String created_user_phone;
     private String created_user_name;
+    private String start_timestamp;
+    private String end_timestamp;
+    private String created_user_fcm_token;
 
     public PostsDataList() {
     }
@@ -47,7 +50,7 @@ public class PostsDataList implements Serializable {
         this.position = position;
     }*/
 
-    public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type, String position, String approved_driver, String created_user_phone, String created_user_name) {
+    public PostsDataList(String created_user_id, String status, String nearest_town, String tour_type, String no_nights, String no_passengers, String start_date, String start_time, String start_location, String end_location, ArrayList<String> night_destination, String approved_bid, ArrayList<DriverData> driverData, String vehicle_type, String position, String approved_driver, String created_user_phone, String created_user_name, String start_timestamp, String end_timestamp, String created_user_fcm_token) {
         this.created_user_id = created_user_id;
         this.status = status;
         this.nearest_town = nearest_town;
@@ -66,6 +69,9 @@ public class PostsDataList implements Serializable {
         this.approved_driver = approved_driver;
         this.created_user_phone = created_user_phone;
         this.created_user_name = created_user_name;
+        this.start_timestamp = start_timestamp;
+        this.end_timestamp = end_timestamp;
+        this.created_user_fcm_token = created_user_fcm_token;
     }
 
     public String getCreated_user_id() {
@@ -211,4 +217,30 @@ public class PostsDataList implements Serializable {
     public void setCreated_user_name(String created_user_name) {
         this.created_user_name = created_user_name;
     }
+
+    public String getStart_timestamp() {
+        return start_timestamp;
+    }
+
+    public void setStart_timestamp(String start_timestamp) {
+        this.start_timestamp = start_timestamp;
+    }
+
+    public String getEnd_timestamp() {
+        return end_timestamp;
+    }
+
+    public void setEnd_timestamp(String end_timestamp) {
+        this.end_timestamp = end_timestamp;
+    }
+
+    public String getCreated_user_fcm_token() {
+        return created_user_fcm_token;
+    }
+
+    public void setCreated_user_fcm_token(String created_user_fcm_token) {
+        this.created_user_fcm_token = created_user_fcm_token;
+    }
+
+
 }

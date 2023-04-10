@@ -183,6 +183,7 @@ public class DriverRegistrationActivity extends AppCompatActivity {
                 else {
 
                     ArrayList<DriverPostsDataList> driverPostsDataLists = new ArrayList<>();
+                    ArrayList<String> allocated_time = new ArrayList<>();
 
                     driverDetails = new DriverDetails(
                             name,
@@ -202,7 +203,8 @@ public class DriverRegistrationActivity extends AppCompatActivity {
                             "",
                             "",
                             "",
-                            "");
+                            "",
+                            "", allocated_time);
 
                     //registerWithPhone();
 

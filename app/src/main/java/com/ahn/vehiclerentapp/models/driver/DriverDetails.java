@@ -25,6 +25,8 @@ public class DriverDetails implements Serializable {
     private String img_3;
     private String img_4;
     private String vehicle_number;
+    private String fcm_token;
+    private ArrayList<String> allocated_time;
 
     public DriverDetails(String name, String nic, String phone_number, String nearest_town, String active_town, String address, String email, String driver_image, String licence_image, String job_type, ArrayList<DriverPostsDataList> driverPostsDataLists, String user_type, String vehicle_type, String img_1, String img_2, String img_3, String img_4, String vehicle_number) {
         this.name = name;
@@ -45,6 +47,51 @@ public class DriverDetails implements Serializable {
         this.img_3 = img_3;
         this.img_4 = img_4;
         this.vehicle_number = vehicle_number;
+    }
+
+    public DriverDetails(String name, String nic, String phone_number, String nearest_town, String active_town, String address, String email, String driver_image, String licence_image, String job_type, ArrayList<DriverPostsDataList> driverPostsDataLists, String user_type, String vehicle_type, String img_1, String img_2, String img_3, String img_4, String vehicle_number, String fcm_token) {
+        this.name = name;
+        this.nic = nic;
+        this.phone_number = phone_number;
+        this.nearest_town = nearest_town;
+        this.active_town = active_town;
+        this.address = address;
+        this.email = email;
+        this.driver_image = driver_image;
+        this.licence_image = licence_image;
+        this.job_type = job_type;
+        this.driverPostsDataLists = driverPostsDataLists;
+        this.user_type = user_type;
+        this.vehicle_type = vehicle_type;
+        this.img_1 = img_1;
+        this.img_2 = img_2;
+        this.img_3 = img_3;
+        this.img_4 = img_4;
+        this.vehicle_number = vehicle_number;
+        this.fcm_token = fcm_token;
+    }
+
+    public DriverDetails(String name, String nic, String phone_number, String nearest_town, String active_town, String address, String email, String driver_image, String licence_image, String job_type, ArrayList<DriverPostsDataList> driverPostsDataLists, String user_type, String vehicle_type, String img_1, String img_2, String img_3, String img_4, String vehicle_number, String fcm_token, ArrayList<String> allocated_time) {
+        this.name = name;
+        this.nic = nic;
+        this.phone_number = phone_number;
+        this.nearest_town = nearest_town;
+        this.active_town = active_town;
+        this.address = address;
+        this.email = email;
+        this.driver_image = driver_image;
+        this.licence_image = licence_image;
+        this.job_type = job_type;
+        this.driverPostsDataLists = driverPostsDataLists;
+        this.user_type = user_type;
+        this.vehicle_type = vehicle_type;
+        this.img_1 = img_1;
+        this.img_2 = img_2;
+        this.img_3 = img_3;
+        this.img_4 = img_4;
+        this.vehicle_number = vehicle_number;
+        this.fcm_token = fcm_token;
+        this.allocated_time = allocated_time;
     }
 
     public DriverDetails() {
@@ -192,5 +239,21 @@ public class DriverDetails implements Serializable {
 
     public void setVehicle_number(String vehicle_number) {
         this.vehicle_number = vehicle_number;
+    }
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
+    }
+
+    public ArrayList<String> getAllocated_time() {
+        return allocated_time;
+    }
+
+    public void setAllocated_time(ArrayList<String> allocated_time) {
+        this.allocated_time = allocated_time;
     }
 }

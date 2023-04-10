@@ -1,6 +1,7 @@
 package com.ahn.vehiclerentapp.ui.host;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import com.ahn.vehiclerentapp.BidsDetailsActivity;
 import com.ahn.vehiclerentapp.adaptes.AcceptedPostAdapter;
 import com.ahn.vehiclerentapp.adaptes.PostAdapter;
+import com.ahn.vehiclerentapp.constant.Constants;
 import com.ahn.vehiclerentapp.models.city.CityData;
 import com.ahn.vehiclerentapp.models.city.CityDataList;
 import com.ahn.vehiclerentapp.models.posts.PostData;
@@ -41,8 +45,11 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +63,12 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
+    SharedPreferences sharedpreferences;
+
     private TextView tv_post;
     private View v_post;
     private TextView tv_accepted;
+    private TextView tv_accepted_count;
     private View v_accepted;
     private TextView tv_complete;
     private View v_complete;
@@ -94,6 +104,8 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
 
         userDetails = new UserDetails();
 
+        sharedpreferences = getSharedPreferences(Constants.SHARE_PREFERENCE_TAG, Context.MODE_PRIVATE);
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         tv_post = findViewById(R.id.tv_post);
         v_post = findViewById(R.id.v_post);
@@ -106,6 +118,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         rv_new_post = findViewById(R.id.rv_new_post);
         rv_accepted_post = findViewById(R.id.rv_accepted_post);
         rv_complete_post = findViewById(R.id.rv_complete_post);
+        tv_accepted_count = findViewById(R.id.tv_accepted_count);
 
         tv_post.setOnClickListener(this);
         v_post.setOnClickListener(this);
@@ -123,6 +136,10 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 hideProgress();
                 userDetails = documentSnapshot.toObject(UserDetails.class);
                 Log.d("TAG", "onSuccess: userDetails " + userDetails);
+
+                if (userDetails.getFcm_token().equals("")){
+                    getToken();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -165,6 +182,85 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         });*/
 
         showProgress("Loading...");
+
+
+       firebaseFirestore.collection("posts")
+                       .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                           @Override
+                           public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
+                               if (e != null) {
+                                   Log.w("TAG", "Listen failed.", e);
+                                   hideProgress();
+                                   return;
+                               }
+                               else {
+                                   List<PostsDataList> postsDataLists = querySnapshot.toObjects(PostsDataList.class);
+                                   postsDataListsMain.clear();
+                                   postsDataListsNew.clear();
+                                   postsDataListsAccepted.clear();
+                                   postsDataListsCompleted.clear();
+
+                                   if (postsDataLists.size() !=0) {
+                           /* if (postsDataLists.get(0).getPostsDataLists() != null) {
+                                postsDataListsMain.addAll(postsDataLists.get(0).getPostsDataLists());
+                                Log.d("TAG", "onSuccess: ");*/
+
+                                       postsDataListsMain.addAll(postsDataLists);
+
+                                       for (PostsDataList postsDataList : postsDataListsMain) {
+                                           if (postsDataList.getCreated_user_id().equals(userID)) {
+                                               switch (postsDataList.isStatus()) {
+                                                   case "new":
+                                                       postsDataListsNew.add(postsDataList);
+                                                       if (postsDataListsNew.size() < 1){
+                                                           tv_not_data.setVisibility(View.VISIBLE);
+                                                       }
+                                                       else {
+                                                           tv_not_data.setVisibility(View.INVISIBLE);
+                                                       }
+                                                       break;
+                                                   case "accepted":
+                                                       postsDataListsAccepted.add(postsDataList);
+                                                       if (postsDataListsAccepted.size() > 0) {
+                                                           tv_accepted_count.setVisibility(View.VISIBLE);
+                                                           tv_accepted_count.setText(String.valueOf(postsDataListsAccepted.size()));
+                                                       }
+
+                                                       if (postsDataListsAccepted.size() < 1){
+                                                           tv_not_data.setVisibility(View.VISIBLE);
+                                                       }
+                                                       else {
+                                                           tv_not_data.setVisibility(View.INVISIBLE);
+                                                       }
+                                                       break;
+                                                   case "completed":
+                                                       postsDataListsCompleted.add(postsDataList);
+                                                       if (postsDataListsCompleted.size() < 1){
+                                                           tv_not_data.setVisibility(View.VISIBLE);
+                                                       }
+                                                       else {
+                                                           tv_not_data.setVisibility(View.INVISIBLE);
+                                                       }
+                                                       break;
+                                               }
+
+                                               //  }
+                                           }
+                                           rv_new_post.setVisibility(View.VISIBLE);
+                                           tv_not_data.setVisibility(View.INVISIBLE);
+                                           showNewData();
+                                           Log.d("TAG", "onSuccess: ");
+                                           hideProgress();
+                                       }
+                                   }
+
+                               }
+                           }
+                       });
+
+
+
+/*
         firebaseFirestore.collection("posts")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -173,9 +269,11 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                         List<PostsDataList> postsDataLists = querySnapshot.toObjects(PostsDataList.class);
                         postsDataListsMain.clear();
                         if (postsDataLists.size() !=0) {
-                           /* if (postsDataLists.get(0).getPostsDataLists() != null) {
+                           */
+/* if (postsDataLists.get(0).getPostsDataLists() != null) {
                                 postsDataListsMain.addAll(postsDataLists.get(0).getPostsDataLists());
-                                Log.d("TAG", "onSuccess: ");*/
+                                Log.d("TAG", "onSuccess: ");*//*
+
 
                             postsDataListsMain.addAll(postsDataLists);
 
@@ -184,12 +282,35 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                                         switch (postsDataList.isStatus()) {
                                             case "new":
                                                 postsDataListsNew.add(postsDataList);
+                                                if (postsDataListsNew.size() < 1){
+                                                    tv_not_data.setVisibility(View.VISIBLE);
+                                                }
+                                                else {
+                                                    tv_not_data.setVisibility(View.INVISIBLE);
+                                                }
                                                 break;
                                             case "accepted":
                                                 postsDataListsAccepted.add(postsDataList);
+                                                if (postsDataListsAccepted.size() > 0) {
+                                                    tv_accepted_count.setVisibility(View.VISIBLE);
+                                                    tv_accepted_count.setText(String.valueOf(postsDataListsAccepted.size()));
+                                                }
+
+                                                if (postsDataListsAccepted.size() < 1){
+                                                    tv_not_data.setVisibility(View.VISIBLE);
+                                                }
+                                                else {
+                                                    tv_not_data.setVisibility(View.INVISIBLE);
+                                                }
                                                 break;
                                             case "completed":
                                                 postsDataListsCompleted.add(postsDataList);
+                                                if (postsDataListsCompleted.size() < 1){
+                                                    tv_not_data.setVisibility(View.VISIBLE);
+                                                }
+                                                else {
+                                                    tv_not_data.setVisibility(View.INVISIBLE);
+                                                }
                                                 break;
                                         }
 
@@ -210,6 +331,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                         hideProgress();
                     }
                 });
+*/
 
 
 
@@ -244,6 +366,29 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 return false;
             }
         });
+    }
+
+    private void getToken() {
+        FirebaseMessaging.getInstance().getToken().addOnSuccessListener(this::updateToken);
+    }
+
+    private void updateToken(String token){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference =
+                database.collection("users").document(userID);
+        documentReference.update(Constants.FCM_TOKEN, token)
+                .addOnSuccessListener(unused -> showToast("Token updated successfully"))
+                .addOnFailureListener(e -> showToast("Unable to update toke"));
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Constants.FCM_TOKEN, token);
+        editor.commit();
+        editor.apply();
+
+    }
+
+    private void showToast(String massage){
+        Toast.makeText(getApplicationContext(), massage, Toast.LENGTH_SHORT).show();
     }
 
     @Override

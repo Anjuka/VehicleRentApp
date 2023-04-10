@@ -119,7 +119,10 @@ public class PostDriverViewAdapter extends BaseAdapter {
                     itemClickListner.onItemClick(position,
                             postsDataLists.get(position).getPosition(),
                             postsDataLists.get(position).getDriverData(),
-                            et_bid.getText().toString().trim());
+                            et_bid.getText().toString().trim(),
+                            postsDataLists.get(position).getStart_timestamp(),
+                            postsDataLists.get(position).getCreated_user_id(),
+                            postsDataLists.get(position).getCreated_user_fcm_token());
                 }
             }
         });
@@ -128,5 +131,5 @@ public class PostDriverViewAdapter extends BaseAdapter {
     }
 
     public interface itemClickListner{
-        void onItemClick(int position, String item_position, ArrayList<DriverData> driverData, String bid); }
+        void onItemClick(int position, String item_position, ArrayList<DriverData> driverData, String bid, String start_timestamp, String created_user_id, String created_user_fcm_token); }
 }

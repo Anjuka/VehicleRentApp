@@ -15,6 +15,7 @@ public class UserDetails implements Serializable {
     private String email;
     private String image;
     private ArrayList<UserPostsDataList> userPostsDataLists;
+    private String fcm_token;
 
     public UserDetails(String name, String nic, String property_name, String phone_number, String br, String active_town, String address, String email, String image, ArrayList<UserPostsDataList> userPostsDataLists) {
         this.name = name;
@@ -27,6 +28,20 @@ public class UserDetails implements Serializable {
         this.email = email;
         this.image = image;
         this.userPostsDataLists = userPostsDataLists;
+    }
+
+    public UserDetails(String name, String nic, String property_name, String phone_number, String br, String active_town, String address, String email, String image, ArrayList<UserPostsDataList> userPostsDataLists, String fcm_token) {
+        this.name = name;
+        this.nic = nic;
+        this.property_name = property_name;
+        this.phone_number = phone_number;
+        this.br = br;
+        this.active_town = active_town;
+        this.address = address;
+        this.email = email;
+        this.image = image;
+        this.userPostsDataLists = userPostsDataLists;
+        this.fcm_token = fcm_token;
     }
 
     public UserDetails() {
@@ -110,6 +125,14 @@ public class UserDetails implements Serializable {
 
     public void setUserPostsDataLists(ArrayList<UserPostsDataList> userPostsDataLists) {
         this.userPostsDataLists = userPostsDataLists;
+    }
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
     }
 }
 
