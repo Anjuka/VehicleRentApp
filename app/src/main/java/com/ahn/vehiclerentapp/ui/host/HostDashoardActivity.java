@@ -530,6 +530,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         Log.d("TAG", "onItemClick: ");
         Intent intent = new Intent(HostDashoardActivity.this, BidsDetailsActivity.class);
         intent.putExtra("post_data", postsDataLists);
+        intent.putExtra("user_data", userDetails);
         startActivity(intent);
     }
 

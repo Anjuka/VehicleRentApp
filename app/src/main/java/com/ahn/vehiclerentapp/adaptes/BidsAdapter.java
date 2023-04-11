@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahn.vehiclerentapp.R;
@@ -19,16 +20,18 @@ public class BidsAdapter extends BaseAdapter {
     ArrayList<DriverData> bidsList;
     ItemClickListener itemClickListener;
     ItemClickListenerButtons itemClickListenerButtons;
+    DriveInfoClickListener driveInfoClickListener;
     String post_position_id;
 
     public BidsAdapter(Context context, ArrayList<DriverData> bidsList,
                        ItemClickListener itemClickListener,
-                       ItemClickListenerButtons itemClickListenerButtons, String post_position_id) {
+                       ItemClickListenerButtons itemClickListenerButtons, String post_position_id, DriveInfoClickListener driveInfoClickListener) {
         this.context = context;
         this.bidsList = bidsList;
         this.itemClickListener = itemClickListener;
         this.itemClickListenerButtons = itemClickListenerButtons;
         this.post_position_id = post_position_id;
+        this.driveInfoClickListener = driveInfoClickListener;
     }
 
     @Override
@@ -58,6 +61,7 @@ public class BidsAdapter extends BaseAdapter {
         TextView tv_bit = contentView.findViewById(R.id.tv_bit);
         TextView tv_accept = contentView.findViewById(R.id.tv_accept);
         TextView tv_cancel = contentView.findViewById(R.id.tv_cancel);
+        ImageView iv_drive_info = contentView.findViewById(R.id.iv_drive_info);
 
         tv_driver_name.setText(bidsList.get(position).getName());
        // tv_vehicle_type.setText(context.getResources().getText(R.string.vehicle_type_post) + " " + bidsList.get(position).getPhone_number());
@@ -79,6 +83,13 @@ public class BidsAdapter extends BaseAdapter {
             }
         });
 
+        iv_drive_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                driveInfoClickListener.onItemClickInfo(position, bidsList.get(position).getDriver_id());
+            }
+        });
+
         return contentView;
     }
 
@@ -88,5 +99,9 @@ public class BidsAdapter extends BaseAdapter {
 
     public interface ItemClickListenerButtons{
         void onItemClickButtons(int position, DriverData driverData, int type, String post_position_id, String selected_bid);
+    }
+
+    public interface DriveInfoClickListener{
+        void onItemClickInfo(int position, String driver_id);
     }
 }

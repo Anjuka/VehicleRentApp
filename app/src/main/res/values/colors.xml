@@ -30,5 +30,6 @@
     <color name="status_complete">#FF9800</color>
 
     <color name="red">#732525</color>
+    <color name="background_dark1_shade">#DA1B1B1B</color>
 
 </resources>

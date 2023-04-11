@@ -150,7 +150,7 @@ public class DriverDashoardActivity extends AppCompatActivity implements PostDri
 
                 getPosts();
 
-                if (driverDetails.getFcm_token().equals("")){
+                if (driverDetails.getFcm_token().equals("") || driverDetails.getFcm_token() == null){
                     getToken();
                 }
             }
