@@ -117,4 +117,6 @@
     <string name="back_view">Back View</string>
     <string name="side_view">Side View</string>
     <string name="indoor_view">Indoor View</string>
+    <string name="complete_the_job">Complete The Job</string>
+    <string name="cant_complete_job_this_time">You can\'t complete this job at this moment</string>
 </resources>

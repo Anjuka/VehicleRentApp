@@ -8,25 +8,19 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ahn.vehiclerentapp.R;
-import com.ahn.vehiclerentapp.models.posts.DriverData;
 import com.ahn.vehiclerentapp.models.posts.PostsDataList;
 
 import java.util.ArrayList;
 
-public class AcceptedDriverPostAdapter extends BaseAdapter {
+public class CompletedDriverPostAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<PostsDataList> postsDataLists;
-    ItemClickListenerAccList itemClickListener;
-    ItemClickListenerCompleting itemClickListenerCompl;
     String phone ="";
 
-    public AcceptedDriverPostAdapter(Context context, ArrayList<PostsDataList> postsDataLists,
-                                     ItemClickListenerAccList itemClickListener, ItemClickListenerCompleting itemClickListenerCompl) {
+    public CompletedDriverPostAdapter(Context context, ArrayList<PostsDataList> postsDataLists) {
         this.context = context;
         this.postsDataLists = postsDataLists;
-        this.itemClickListener = itemClickListener;
-        this.itemClickListenerCompl = itemClickListenerCompl;
     }
 
     @Override
@@ -49,13 +43,13 @@ public class AcceptedDriverPostAdapter extends BaseAdapter {
 
         if (contentView == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
-            contentView = inflater.inflate(R.layout.item_post_accept_driver, parent, false);
+            contentView = inflater.inflate(R.layout.item_post_complet_driver, parent, false);
         }
 
         TextView tv_trip_type = contentView.findViewById(R.id.tv_trip_type);
         TextView tv_no_pass = contentView.findViewById(R.id.tv_no_pass);
         TextView tv_no_nights = contentView.findViewById(R.id.tv_no_nights);
-        TextView tv_appl_bids = contentView.findViewById(R.id.tv_appl_bids);
+        //TextView tv_appl_bids = contentView.findViewById(R.id.tv_appl_bids);
         TextView tv_status = contentView.findViewById(R.id.tv_status);
         TextView tv_date = contentView.findViewById(R.id.tv_date);
         TextView tv_time = contentView.findViewById(R.id.tv_time);
@@ -81,7 +75,7 @@ public class AcceptedDriverPostAdapter extends BaseAdapter {
         tv_no_pass.setText(context.getResources().getText(R.string.passengers) + " " + postsDataLists.get(position).getNo_passengers());
         tv_date.setText(context.getResources().getText(R.string.date_post) + " " + postsDataLists.get(position).getStart_date());
         tv_time.setText(context.getResources().getText(R.string.time_post) + " " + postsDataLists.get(position).getStart_time());
-        tv_appl_bids.setText(context.getResources().getText(R.string.applied_bids) + " " + String.valueOf(postsDataLists.get(position).getDriverData().size()));
+       // tv_appl_bids.setText(context.getResources().getText(R.string.applied_bids) + " " + String.valueOf(postsDataLists.get(position).getDriverData().size()));
         tv_vehi_type.setText(context.getResources().getText(R.string.vehicle_type_post) + " " + String.valueOf(postsDataLists.get(position).getVehicle_type()));
         tv_start.setText(context.getResources().getText(R.string.start_location) + " " + String.valueOf(postsDataLists.get(position).getStart_location()));
         tv_end.setText(context.getResources().getText(R.string.end_location) + " " + String.valueOf(postsDataLists.get(position).getEnd_location()));
@@ -116,29 +110,6 @@ public class AcceptedDriverPostAdapter extends BaseAdapter {
                 break;
         }
 
-
-        tv_call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClickListener.onItemClickAcceptDriver(position, postsDataLists.get(position), phone);
-            }
-        });
-
-        tv_complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemClickListenerCompl.onItemClickComplete(position, postsDataLists.get(position), postsDataLists.get(position).getEnd_timestamp());
-            }
-        });
-
         return contentView;
-    }
-
-    public interface ItemClickListenerAccList{
-        void onItemClickAcceptDriver(int position, PostsDataList postsDataLists, String phone);
-    }
-
-    public interface ItemClickListenerCompleting{
-        void onItemClickComplete(int position, PostsDataList postsDataLists, String end_time);
     }
 }

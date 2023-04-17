@@ -229,12 +229,26 @@ public class BidsDetailsActivity extends AppCompatActivity implements BidsAdapte
                             postsDataList.setApproved_bid(selected_bid);
                             postsDataList.setApproved_driver(driverData.getDriver_id());
 
+                            String end_time_stamp = "";
+
+                            if (postsDataList.getTour_type().equals("Tour")){
+                                long days = Long.parseLong(postsDataList.getNo_nights());
+                                long end_time = Long.parseLong(postsDataList.getStart_timestamp()) + (days * 86400000);
+                                end_time_stamp = String.valueOf(end_time);
+
+                            } else {
+                                //1 h end time
+                                long end_time = Long.parseLong(postsDataList.getStart_timestamp()) + 3600000;
+                                end_time_stamp = String.valueOf(end_time);
+                            }
+
                             Task<Void> documentReference = firebaseFirestore.
                                     collection("posts").
                                     document(post_position_id).
                                     update("approved_bid", selected_bid,
                                             "approved_driver", driverData.getDriver_id(),
-                                            "status", "accepted")
+                                            "status", "accepted",
+                                            "end_timestamp", end_time_stamp)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {

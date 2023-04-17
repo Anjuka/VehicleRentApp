@@ -992,7 +992,7 @@ public class PostCreateActivity extends AppCompatActivity implements View.OnClic
                         uuid,
                         "",
                         user_data.getPhone_number(),
-                        user_data.getPhone_number(),
+                        user_data.getName(),
                         start_timestamp,
                         end_timestamp,
                         user_data.getFcm_token()

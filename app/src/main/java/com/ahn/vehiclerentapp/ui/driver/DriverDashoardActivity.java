@@ -27,9 +27,11 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ahn.vehiclerentapp.BidsDetailsActivity;
 import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.adaptes.AcceptedDriverPostAdapter;
 import com.ahn.vehiclerentapp.adaptes.AcceptedPostAdapter;
+import com.ahn.vehiclerentapp.adaptes.CompletedDriverPostAdapter;
 import com.ahn.vehiclerentapp.adaptes.PostDriverViewAdapter;
 import com.ahn.vehiclerentapp.constant.Constants;
 import com.ahn.vehiclerentapp.models.driver.DriverDetails;
@@ -65,7 +67,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DriverDashoardActivity extends AppCompatActivity implements PostDriverViewAdapter.itemClickListner, View.OnClickListener, AcceptedDriverPostAdapter.ItemClickListenerAccList {
+public class DriverDashoardActivity extends AppCompatActivity implements PostDriverViewAdapter.itemClickListner, View.OnClickListener, AcceptedDriverPostAdapter.ItemClickListenerAccList, AcceptedDriverPostAdapter.ItemClickListenerCompleting {
 
     private BottomNavigationView bottomNavigationView;
     private ProgressDialog progressDialog;
@@ -96,6 +98,8 @@ public class DriverDashoardActivity extends AppCompatActivity implements PostDri
 
     PostDriverViewAdapter postDriverViewAdapter;
     AcceptedDriverPostAdapter acceptedPostAdapter;
+    CompletedDriverPostAdapter completedDriverPostAdapter;
+
 
     private ArrayList<PostsDataList> postsDataListsMain = new ArrayList<>();
     private ArrayList<PostsDataList> postsDataListsNew = new ArrayList<>();
@@ -596,6 +600,8 @@ public class DriverDashoardActivity extends AppCompatActivity implements PostDri
                 rv_complete_post.setVisibility(View.VISIBLE);
                 rv_accepted_post.setVisibility(View.INVISIBLE);
                 rv_new_post.setVisibility(View.INVISIBLE);
+
+                showCompletedData();
                 break;
             case R.id.v_complete:
                 tv_complete.setTextColor(getResources().getColor(R.color.gray));
@@ -611,13 +617,20 @@ public class DriverDashoardActivity extends AppCompatActivity implements PostDri
                 rv_complete_post.setVisibility(View.VISIBLE);
                 rv_accepted_post.setVisibility(View.INVISIBLE);
                 rv_new_post.setVisibility(View.INVISIBLE);
+
+                showCompletedData();
                 break;
         }
 
     }
 
+    private void showCompletedData() {
+        completedDriverPostAdapter = new CompletedDriverPostAdapter(DriverDashoardActivity.this, postsDataListsCompleted);
+        rv_complete_post.setAdapter(completedDriverPostAdapter);
+    }
+
     private void showAcceptedData() {
-        acceptedPostAdapter = new AcceptedDriverPostAdapter(DriverDashoardActivity.this, postsDataListsAccepted, DriverDashoardActivity.this::onItemClickAcceptDriver);
+        acceptedPostAdapter = new AcceptedDriverPostAdapter(DriverDashoardActivity.this, postsDataListsAccepted, DriverDashoardActivity.this::onItemClickAcceptDriver, DriverDashoardActivity.this::onItemClickComplete);
         rv_accepted_post.setAdapter(acceptedPostAdapter);
     }
 
@@ -688,6 +701,81 @@ public class DriverDashoardActivity extends AppCompatActivity implements PostDri
         }
         else {
             ActivityCompat.requestPermissions(DriverDashoardActivity.this, new String[]{Manifest.permission.CALL_PHONE},100);
+        }
+    }
+
+    @Override
+    public void onItemClickComplete(int position, PostsDataList postsDataLists, String end_time) {
+        long current_time = System.currentTimeMillis();
+        long end_time_l = Long.parseLong(end_time);
+        if (current_time >= end_time_l){
+            //ok
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(DriverDashoardActivity.this);
+            builder1.setMessage("Are you confirm this action ?");
+            builder1.setCancelable(true);
+            builder1.setTitle("Confirmation");
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                            // accept the bid
+                            Task<Void> documentReference = firebaseFirestore.
+                                    collection("posts").
+                                    document(postsDataLists.getPosition()).
+                                    update( "status", "completed")
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+
+                                            JSONArray tokens = new JSONArray();
+                                            tokens.put(postsDataLists.getCreated_user_fcm_token());
+
+                                            JSONObject data = new JSONObject();
+                                            try {
+                                                data.put("user_id", userID);
+                                                data.put("post_details", postsDataLists);
+                                                data.put(Constants.FCM_TOKEN, driverDetails.getFcm_token());
+                                                data.put(Constants.KEY_MESSAGE, "job_completed");
+
+                                                JSONObject body = new JSONObject();
+                                                body.put(Constants.REMOTE_MSG_DATA, data);
+                                                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                                                sendNotification(body.toString());
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            Toast.makeText(DriverDashoardActivity.this, "Job Completed...", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                            startActivity(getIntent());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(DriverDashoardActivity.this, "Bid approve fail...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        else {
+            String msg = getString(R.string.cant_complete_job_this_time);
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

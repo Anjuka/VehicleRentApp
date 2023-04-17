@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.ahn.vehiclerentapp.BidsDetailsActivity;
 import com.ahn.vehiclerentapp.adaptes.AcceptedPostAdapter;
+import com.ahn.vehiclerentapp.adaptes.CompletedPostAdapter;
 import com.ahn.vehiclerentapp.adaptes.PostAdapter;
 import com.ahn.vehiclerentapp.constant.Constants;
 import com.ahn.vehiclerentapp.models.city.CityData;
@@ -54,7 +55,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener, PostAdapter.ItemClickListener, AcceptedPostAdapter.ItemClickListenerAccList{
+public class HostDashoardActivity extends AppCompatActivity implements View.OnClickListener, PostAdapter.ItemClickListener, AcceptedPostAdapter.ItemClickListenerAccList,
+        CompletedPostAdapter.ItemClickListenerAccListCompl{
 
     private int REQUEST_PHONE_CALL = 10001;
     private BottomNavigationView bottomNavigationView;
@@ -89,6 +91,7 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
 
     private PostAdapter postAdapter;
     private AcceptedPostAdapter acceptedPostAdapter;
+    private CompletedPostAdapter completedPostAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -478,6 +481,8 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 rv_complete_post.setVisibility(View.VISIBLE);
                 rv_accepted_post.setVisibility(View.INVISIBLE);
                 rv_new_post.setVisibility(View.INVISIBLE);
+
+                showCompletedData();
                 break;
             case R.id.v_complete:
                 tv_complete.setTextColor(getResources().getColor(R.color.gray));
@@ -493,6 +498,8 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 rv_complete_post.setVisibility(View.VISIBLE);
                 rv_accepted_post.setVisibility(View.INVISIBLE);
                 rv_new_post.setVisibility(View.INVISIBLE);
+
+                showCompletedData();
                 break;
             case R.id.btn_create_job:
                 Intent intent = new Intent(getApplicationContext(), PostCreateActivity.class);
@@ -500,6 +507,11 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
                 break;
         }
+    }
+
+    private void showCompletedData() {
+        completedPostAdapter = new CompletedPostAdapter(HostDashoardActivity.this, postsDataListsCompleted,HostDashoardActivity.this::onItemClickCompl);
+        rv_complete_post.setAdapter(completedPostAdapter);
     }
 
     private void showAcceptedData() {
@@ -595,4 +607,8 @@ public class HostDashoardActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    @Override
+    public void onItemClickCompl(int position, PostsDataList postsDataLists, String phone) {
+
+    }
 }

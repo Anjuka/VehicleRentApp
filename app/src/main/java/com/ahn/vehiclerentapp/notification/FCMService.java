@@ -80,6 +80,13 @@ public class FCMService extends FirebaseMessagingService {
                 notification_body = "Your bid is cancelled...";
                 notifyTheUser(notificationId, channelId, message);
                 break;
+
+            case "job_completed":
+                notification_class = HostDashoardActivity.class;
+                notification_title = "Job Completion";
+                notification_body = "Job Completion Notified";
+                notifyTheUser(notificationId, channelId, message);
+                break;
         }
 
     }
