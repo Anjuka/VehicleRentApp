@@ -294,7 +294,9 @@ public class DriverDashoardActivity extends AppCompatActivity implements PostDri
                                                 }
                                                 break;
                                             case "completed":
-                                                postsDataListsCompleted.add(postsDataList);
+                                                if (postsDataList.getApproved_driver().equals(userID)) {
+                                                    postsDataListsCompleted.add(postsDataList);
+                                                }
                                                 break;
                                         }
 
