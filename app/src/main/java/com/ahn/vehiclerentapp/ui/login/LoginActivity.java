@@ -2,16 +2,19 @@ package com.ahn.vehiclerentapp.ui.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import com.ahn.vehiclerentapp.R;
 import com.ahn.vehiclerentapp.utils.RequestUserPermission;
 import com.ahn.vehiclerentapp.ui.otpVerifications.OTPVerificationLoginActivity;
 import com.ahn.vehiclerentapp.ui.registrationSelection.RegistrationActivity;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -41,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView tv_register;
     private Button btn_login;
     private EditText et_phone_number;
+    private ConstraintLayout cl_main;
 
     private String phone_number = "";
 
@@ -59,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        cl_main = findViewById(R.id.cl_main);
         tv_register = findViewById(R.id.tv_register);
         btn_login = findViewById(R.id.btn_login);
         et_phone_number = findViewById(R.id.et_phone_number);
@@ -71,20 +77,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        cl_main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard(cl_main);
+            }
+        });
+
         RequestUserPermission requestUserPermission = new RequestUserPermission(this);
         requestUserPermission.verifyStoragePermissions();
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.
                 PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest
-                    .permission.WRITE_EXTERNAL_STORAGE}, 0);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 0);
         }
 
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,new String[]{
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    Manifest.permission.CAMERA
             },1000);
             return;
         }
@@ -101,7 +112,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 phone_number = "+94" + et_phone_number.getText().toString().trim();
-                loginWithPhone();
+                if(phone_number.length() == 13 || phone_number.length() == 12) {
+
+                    loginWithPhone();
+                }
             }
         });
     }
@@ -153,5 +167,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void hideProgress(){
         progressDialog.cancel();
+    }
+
+    private void hideKeyboard(ConstraintLayout view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
